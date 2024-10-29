@@ -1,0 +1,118 @@
+.pageContainer {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #f0f0f0;
+    padding: 4rem 2rem;
+  }
+  
+  .contentWrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    background-color: white;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+  }
+  
+  .title {
+    margin-top: 125px;
+    font-size: 2.5rem;
+    color: #222;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  
+  .company {
+    font-size: 2rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .duration,
+  .location {
+    font-size: 1.25rem;
+    color: #777;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .section {
+    margin-bottom: 3rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .bulletList {
+    list-style-type: none;
+    padding-left: 0;
+    text-align: left;
+  }
+  
+  .bulletList li {
+    font-size: 1.2rem;
+    color: #444;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .bulletList li::before {
+    content: '•';
+    color: #ff6600;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+  
+  .backArrow {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+  }
+  
+  .backArrow:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .contentWrapper a {
+    color: white
+  }
+
+  .headerImage {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    height: 150px;
+    overflow: hidden; 
+    border-top-left-radius: 15px; 
+    border-top-right-radius: 15px;
+
+  }
+  
+  .headerImage > img {
+    object-fit: cover; 
+  }
+  
