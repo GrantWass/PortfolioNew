@@ -28,36 +28,6 @@ export const metadata = {
 };
 
 export default function Home() {
-  const experiences = [
-    {
-      role: "Software Developer",
-      company: "Speedway Motors",
-      type: "Internship",
-      dates: "May 2023 - Aug 2023",
-      image: "/speedway.jpg",
-      technologies: [
-        { icon: <FaReact />, color: "#61DAFB" },
-        { icon: <SiJavascript />, color: "#F7DF1E" },
-        { icon: <TbSql />, color: "#F29111" },
-        { icon: <SiCsharp />, color: "#239120" },
-        { icon: <SiDotnet />, color: "#512BD4" },
-      ],
-      link: "/speedway-motors",
-    },
-    {
-      role: "Software Developer",
-      company: "Kiewit",
-      type: "Design Studio",
-      dates: "Jan 2022 - Dec 2022",
-      image: "/kiewit.png",
-      technologies: [
-        { icon: <SiCsharp />, color: "#239120" },
-        { icon: <FaUnity />, color: "#100000" },
-      ],
-      link: "/kiewit",
-    },
-  ];
-
   return (
     <div className={styles.container}>
       <Header />

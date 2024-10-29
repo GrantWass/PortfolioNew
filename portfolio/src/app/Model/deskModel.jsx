@@ -98,11 +98,11 @@ const ThreeDModel = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 350) {
-        setModelScale(2);
-      } else if (window.innerWidth < 500) {
-        setModelScale(2.5);
+        setModelScale(2.25);
+      } else if (window.innerWidth < 550) {
+        setModelScale(2.25);
       } else {
-        setModelScale(3);
+        setModelScale(2.5);
       }
     };
 
@@ -123,8 +123,8 @@ const ThreeDModel = () => {
             <ambientLight intensity={1} />
             <directionalLight position={[0, 10, 5]} intensity={1.5} />
 
-            <Model scale={modelScale} position={[0.5, -1, 0]} setPopupInfo={setPopupInfo} />
-            <OrbitControls minDistance={3} maxDistance={10} />
+            <Model scale={modelScale} position={[.25, -1, 0]} setPopupInfo={setPopupInfo} />
+            <OrbitControls minDistance={3} maxDistance={10} enableZoom={false} />
           </Suspense>
         </Canvas>
         {popupInfo && (

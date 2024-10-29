@@ -26,7 +26,7 @@ const ExperienceCard = () => {
       link: "/speedway",
     },
     {
-      role: "Software Developer",
+      role: "Software Engineer",
       company: "Kiewit",
       type: "Design Studio",
       dates: "August 2024 - May 2025",

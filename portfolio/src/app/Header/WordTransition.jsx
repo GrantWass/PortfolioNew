@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import styles from './header.module.css';
 
-const words = ["Software Developer", "Student", "Collegiate Runner", "Avid Learner"];
+const words = ["Software Developer", "Student", "Collegiate Runner", "Learner"];
 
 const WordTransition = () => {
     const [currentWord, setCurrentWord] = useState(0);

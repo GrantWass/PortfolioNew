@@ -15,7 +15,7 @@ const professionalData = {
     image: "/speedway.jpg",
   },
   kiewit: {
-    title: "Software Developer",
+    title: "Software Engineer",
     company: "Kiewit",
     duration: "Septemeber 2024 - May 2025 · 9 months",
     location: "Raikes School Design Studio program",
