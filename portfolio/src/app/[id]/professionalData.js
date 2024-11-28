@@ -26,6 +26,14 @@ const professionalData = {
     ],
     image: "/kiewit.png",
   },
+  garmin: {
+    title: "Software Developer",
+    company: "Garmin",
+    duration: "May 2025 - August 2025 · 3 months",
+    location: "Internship",
+    tasks: [],
+    image: "/garminHeaderNew.png",
+  },
 };
 
 export default professionalData;

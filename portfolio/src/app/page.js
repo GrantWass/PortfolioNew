@@ -1,11 +1,12 @@
-import Header from "./Header/Header";
+import Header from "../Header/Header";
 import styles from "./home.module.css";
-import ClientSideProjects from "./Projects";
-import { FaReact, FaUnity } from "react-icons/fa";
-import { SiJavascript, SiDotnet, SiCsharp } from "react-icons/si";
-import { TbSql } from "react-icons/tb";
-import Work from "./Work";
-import Education from "./Education/Education";
+import Education from "../Education/Education";
+import Timeline from "../Timeline/Timeline";
+import Model from "../Model/DeskModel";
+import Involvements from "@/Involvement/Involvements";
+import SkillMap from "@/Skills/Skills";
+import { GiClick } from "react-icons/gi";
+import Projects from "../Projects/ProjectSlider";
 
 export const metadata = {
   title: "Grant's Portfolio",
@@ -33,9 +34,33 @@ export default function Home() {
       <Header />
 
       <main className={styles.main}>
+        <section
+          className={styles.section}
+          style={{ marginBottom: "-20px", marginTop: "-50px" }}
+        >
+          <h2 style={{ marginBottom: "50px" }}>Projects</h2>
+          <Projects />
+        </section>
+
         <section className={styles.section}>
-          <h2>Professional Experience</h2>
-          <Work />
+          <h2>
+            Professional Experience <GiClick size={30} />
+          </h2>
+          <Timeline />
+        </section>
+
+        <section className={styles.section}>
+          <h2>
+            Involvement <GiClick size={30} />
+          </h2>
+          <Involvements />
+        </section>
+
+        <section className={styles.section} style={{ marginBottom: "-20px" }}>
+          <h2>
+            A Look Into My Life <GiClick size={30} />
+          </h2>
+          <Model />
         </section>
 
         <section className={styles.section}>
@@ -44,8 +69,10 @@ export default function Home() {
         </section>
 
         <section className={styles.section}>
-          <h2>Projects</h2>
-          <ClientSideProjects />
+          <h2>
+            My Skills <GiClick size={30} />
+          </h2>
+          <SkillMap />
         </section>
       </main>
 

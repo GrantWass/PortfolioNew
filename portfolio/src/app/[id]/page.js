@@ -58,12 +58,16 @@ export default function ProfessionalPage({ params }) {
         <p className={styles.location}>{experience.location}</p>
 
         <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Responsibilities</h2>
-          <ul className={styles.bulletList}>
-            {experience.tasks.map((task, index) => (
-              <li key={index}>{task}</li>
-            ))}
-          </ul>
+          {!experience.tasks.length ? null : (
+            <>
+              <h2 className={styles.sectionTitle}>Responsibilities</h2>
+              <ul className={styles.bulletList}>
+                {experience.tasks.map((task, index) => (
+                  <li key={index}>{task}</li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       </div>
     </div>

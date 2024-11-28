@@ -29,7 +29,6 @@ const projectData = {
       "/gitlerHome.png",
       "/hiddenGame.png",
       "/tooltip.png",
-      "/identity.png",
     ],
     whatIDid: [
       "Implemented user authentication and profile management, utilizing MongoDB for data storage and Redux to manage user login state.",
@@ -60,32 +59,6 @@ const projectData = {
     whatILearned:
       "This project started as a way for me to learn web hosting on AWS. During this developement I was studying for an AWS Cloud Practicioner Certification and wanted to use this project as a way to apply my knowledge. This project cemented my passion for web development and software development as being able to see my work live on the internet was a very rewarding experience.",
   },
-  //   "real-estate-affordability-predictor": {
-  //     title: "Real Estate Affordability Predictor",
-  //     summary:
-  //       "A tool designed to predict real estate affordability using machine learning models and existing databases.",
-  //     images: ["/realestate1.jpg", "/realestate2.jpg"],
-  //     whatIDid: [
-  //       "Analyzed data using accuracy metrics and visualization tools",
-  //       "Improved model accuracy by 50% using feature engineering and hyperparameter tuning",
-  //       "Explored both classification and regression applications of the model",
-  //     ],
-  //     whatILearned:
-  //       "Enhanced skills in data analysis and machine learning, gained experience with model fine-tuning and feature engineering, and learned practical applications of real estate prediction.",
-  //   },
-  //   "mock-compiler": {
-  //     title: "Mock Compiler",
-  //     summary:
-  //       "A functional compiler with type checking, parsing, and lexical analysis, simulating the process of code compilation.",
-  //     images: ["/compiler1.jpg", "/compiler2.jpg"],
-  //     whatIDid: [
-  //       "Designed and implemented the overall structure of the compiler",
-  //       "Optimized recursion logic for parsing nested expressions",
-  //       "Ensured modularity and scalability using software engineering principles",
-  //     ],
-  //     whatILearned:
-  //       "Improved understanding of compiler construction, learned about lexical analysis and parsing, and gained experience in applying DRY, SRP, and SOLID principles.",
-  //   },
 };
 
 export default projectData;
