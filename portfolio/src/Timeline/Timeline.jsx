@@ -1,7 +1,7 @@
 "use client"
 import React from 'react';
 import { useRouter } from "next/navigation";
-import styles from './Timeline.module.css';
+import styles from './timeline.module.css';
 import Image from 'next/image'
 
 const experiences = [

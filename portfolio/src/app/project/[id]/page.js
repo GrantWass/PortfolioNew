@@ -2,7 +2,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import Link from "next/link";
 import styles from "./project.module.css";
 import projectData from "./projectData";
-import Lightbox from "./Lightbox";
+import Lightbox from "./lightbox";
 
 // Define generateMetadata to replace next/head
 export async function generateMetadata({ params }) {
