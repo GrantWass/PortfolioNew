@@ -30,8 +30,7 @@
     letter-spacing: 1px; 
     position: relative; 
     margin-bottom: 2rem;
-
-}
+  }
 
 .section > h2:after {
     content: '';
@@ -51,6 +50,21 @@
     border-top: 1px solid #eaeaea;
   }
 
+  @media (max-width: 768px) {
+    .section > h2 {
+      font-size: 1.6rem;
+    }
+
+    .hideOnMobile {
+      display: none;
+    }
+  }
+
+  @media (max-width: 350px) {
+    .section > h2 {
+      font-size: 1.4rem;
+    }
+  }
   
 
 

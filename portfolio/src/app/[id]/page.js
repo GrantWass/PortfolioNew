@@ -29,6 +29,10 @@ export async function generateMetadata({ params }) {
   };
 }
 
+export async function generateStaticParams() {
+  return Object.keys(professionalData).map((id) => ({ id }));
+}
+
 export default function ProfessionalPage({ params }) {
   const { id } = params;
   const experience = professionalData[id];

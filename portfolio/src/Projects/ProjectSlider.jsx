@@ -50,7 +50,7 @@ const projects = [
   },
   {
     title: "Stock Analysis",
-    image: "/homepage.png",
+    image: "/forecast.png",
     slug: "stock-analysis",
     technologies: [
       { icon: <SiReact />, color: "#61DAFB" },
@@ -73,12 +73,21 @@ const projects = [
 
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
-
+  
   useEffect(() => {
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-
+  
+    let intervalId;
+  
+    const startAutoSlide = () => {
+      clearInterval(intervalId);
+      intervalId = setInterval(() => {
+        nextButton.click();
+      }, 8000);
+    };
+  
     const activate = (e) => {
       const items = document.querySelectorAll(".item");
       if (e.target.matches(".next")) {
@@ -86,23 +95,22 @@ const Home = () => {
       } else if (e.target.matches(".prev")) {
         slider.prepend(items[items.length - 1]);
       }
-      setActiveProject(slider.children[1].querySelector('h3').textContent)
+      setActiveProject(slider.children[1].querySelector('h3').textContent);
+      startAutoSlide(); 
     };
-
+  
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-
-    const intervalId = setInterval(() => {
-      nextButton.click(); 
-    }, 8000);
-
+  
+    startAutoSlide(); 
+  
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
       clearInterval(intervalId);
     };
   }, []);
-
+  
   return (
     <div className="main">
       <ul className="slider">

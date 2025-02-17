@@ -56,7 +56,10 @@ export default function Home() {
           <Involvements />
         </section>
 
-        <section className={styles.section} style={{ marginBottom: "-20px" }}>
+        <section
+          className={`${styles.section} ${styles.hideOnMobile}`} //Todo
+          style={{ marginBottom: "-20px" }}
+        >
           <h2>
             A Look Into My Life <GiClick size={30} />
           </h2>

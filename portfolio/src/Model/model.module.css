@@ -27,17 +27,6 @@
     color: #333;
   }
     
-  .popup {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    pointer-events: none;
-    transform: translate(-50%, -100%);
-  }
-
   @media (max-width: 550px) {
     .container {
       height: 325px;

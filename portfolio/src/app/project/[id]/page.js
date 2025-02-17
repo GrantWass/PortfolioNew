@@ -34,6 +34,10 @@ export async function generateMetadata({ params }) {
   };
 }
 
+export async function generateStaticParams() {
+  return Object.keys(projectData).map((id) => ({ id }));
+}
+
 export default function ProjectPage({ params }) {
   const { id } = params;
   const project = projectData[id];

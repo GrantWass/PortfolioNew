@@ -25,7 +25,7 @@ export default function ClientSideProjects({project, index, activeProject}) {
                     <Image src={project.image} alt={project.title} height={700} width={400} priority/>
                 </div>
                 <h3>{project.title}</h3>
-                <p onClick={() => handleProjectClick(project.slug)}>Learn More</p>
+                {project.title !== "Stock Analysis" && project.title !== "ScheduleLocal" ? <p onClick={() => handleProjectClick(project.slug)}>Learn More</p> : false}
                 <div className="technologies">
                     {project.technologies.map((tech, idx) => (
                     <span key={idx} style={{ color: tech.color }}>

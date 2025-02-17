@@ -17,29 +17,28 @@ const popupContent = {
   Globe001: {
     title: 'Globe - Exploring the World',
     images: ["/travel1.JPG","/test1.jpg","/travel3.jpeg"],
-    description: 'I love traveling and exploring. I have a bad habit of extensively planning trips that will probably never go on. I think in another life I am a travel agent (I even act as one for my family trips). If I wasn\'t on the Cross Country and Track team at UNL I would 100% study abroad. I find so much joy in experiencing new things and seeing the world. I have been to 19 states and hope to visit all 50.',
+    description: 'I love traveling and exploring. I have a bad habit of extensively planning trips that will probably never go on...',
   },
   'Monitor001|iMac|Dupli|': {
     title: 'Mac - My Coding Journey',
-    description: 'My journey to coding started my senior year of high school when I took a simple coding class and immediately loved it. I found that coding created the connection from my strengths in logical thinking and mathematics to my drive to solve impactful problems in a creative manner. That simple class, which primarily used code.org, opened my eyes to the world of programming. Since then I have dove headfirst into computer science and haven\'t looked back since. As I learn more and more I do not regret my decision. I love coding, solving real problems, and leveraging my logical strengths. Today, I am passionate about building applications that not only meet needs but also challenge me to think critically and innovate. Each project is an opportunity for growth, collaboration, and creativity, and I am excited to see where this journey will take me in the future.',
+    description: 'My journey to coding started my senior year of high school...',
   },
   Plant_3: {
     title: 'Plant - Nature Enthusiast',
     images: ["/nature1.JPG","/nature2.JPG","/nature3.jpeg"],
-    description: 'This plant represents my love for nature. I enjoy hiking, camping, and exploring the outdoors. I find peace in nature and love to spend time outside. I have a goal to climb all of Colorado\'s 14ers and have climbed 9 so far. My plan in the near future is to go on a backpacking trip in either Colorado or the Pacific Northwest and I have already started purchasing gear for the trip. Nature is beautiful and I love being in it.',
+    description: 'This plant represents my love for nature...',
   },
   ShoeLeft: {
     title: 'Running Shoes - Collegiate Athlete',
-    images: ["/xc1.png","/xc2.png","/test1.jpg"],
-    description: 'Running has been a central part of my life, shaping who I am today. I\'ve been a competitive runner since middle school and now continue to compete at the collegiate level at Nebraska. Through running, I\'ve learned discipline, hard work, and the ability to push beyond my limits. Balancing 80-mile weeks, academics, and a part-time job has also taught me valuable time management skills. Running has opened doors for me to travel, compete, and pursue my passion, and I\'m incredibly grateful for these opportunities. It will always be a key part of my identity. For those curious, my mile PR is 4:14, and my favorite race is the indoor 3K.',
+    images: ["/xc1.png","/xc2.png","/xc3.JPG"],
+    description: 'Running has been a central part of my life, shaping who I am today...',
   },
   ShoeRight: {
     title: 'Running Shoes - Collegiate Athlete',
-    images: ["/xc1.png","/xc2.png","/test1.jpg"],
-    description: 'Running has been a central part of my life, shaping who I am today. I\'ve been a competitive runner since middle school and now continue to compete at the collegiate level at Nebraska. Through running, I\'ve learned discipline, hard work, and the ability to push beyond my limits. Balancing 80-mile weeks, academics, and a part-time job has also taught me valuable time management skills. Running has opened doors for me to travel, compete, and pursue my passion, and I\'m incredibly grateful for these opportunities. It will always be a key part of my identity. For those curious, my mile PR is 4:14, and my favorite race is the indoor 3K.',
+    images: ["/xc1.png","/xc2.png","/xc3.JPG"],
+    description: 'Running has been a central part of my life, shaping who I am today...',
   },
 };
-
 
 function Model(props) {
   const { scene } = useGLTF('/model.glb');
@@ -48,7 +47,6 @@ function Model(props) {
 
   const handleClick = (event) => {
     const intersects = event.intersections;
-
     if (intersects.length > 0) {
       const object = intersects[0].object;
       const objectName = object.name || 'Unknown Object';
@@ -62,7 +60,6 @@ function Model(props) {
 
   const handlePointerOver = (event) => {
     const intersects = event.intersections;
-
     if (intersects.length > 0) {
       const object = intersects[0].object;
       const objectName = object.name || 'Unknown Object';
@@ -98,12 +95,14 @@ function Model(props) {
 const ThreeDModel = () => {
   const [modelScale, setModelScale] = useState(3);
   const [popupInfo, setPopupInfo] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 350) {
-        setModelScale(2.25);
-      } else if (window.innerWidth < 550) {
+      const isLargeScreen = window.innerWidth >= 768; // Only show on screens >= 768px
+      setIsDesktop(isLargeScreen);
+
+      if (window.innerWidth < 550) {
         setModelScale(2.25);
       } else {
         setModelScale(2.5);
@@ -118,6 +117,8 @@ const ThreeDModel = () => {
     };
   }, []);
 
+  if (!isDesktop) return null; // Prevent rendering on mobile
+
   return (
     <div className={styles.pageContainer}>
       <div className={styles.container}>
@@ -125,7 +126,6 @@ const ThreeDModel = () => {
           <Suspense fallback={null}>
             <ambientLight intensity={1} />
             <directionalLight position={[0, 10, 5]} intensity={1.5} />
-
             <Model scale={modelScale} position={[.25, -1, 0]} setPopupInfo={setPopupInfo} />
             <OrbitControls minDistance={3} maxDistance={10} enableZoom={false} />
           </Suspense>
