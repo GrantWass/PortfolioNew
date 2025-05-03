@@ -40,6 +40,21 @@ const projectData = {
     whatILearned:
       "This was my first web development project, where I started with no prior knowledge and learned the fundamentals of web development. Throughout this project, I became proficient in React, TypeScript, MongoDB, HTML, and CSS. In addition to these languages and tools, I gained experience in teamwork, including branch management, agile methodology, and project management. At the time, these concepts were entirely new to me, making this project a significant learning opportunity. I also explored user management and authentication, modern web development architecture, and implemented web sockets for real-time gameplay.",
   },
+  "neural-network": {
+    title: "Interactive Neural Network Visualizer",
+    summary:
+      "A web-based tool (nn-visual.com) that visually demonstrates how neural networks learn, enabling users to observe forward and backward propagation in real time.",
+    images: ["/nn.png"],
+    whatIDid: [
+      "Designed and built a fully interactive neural network visualizer using React and TypeScript, with an intuitive UI for exploring forward and backward propagation.",
+      "Implemented core neural network logic from scratch, including weight initialization, activation functions, and gradient-based training updates.",
+      "Created real-time visuals to display how activations, weights, and gradients change during training for each layer and node.",
+      "Integrated Chart.js to display live tracking of loss and accuracy over training epochs.",
+      "Enabled user customization of network architecture, learning rate, training data, and other hyperparameters through a clean interface.",
+    ],
+    whatILearned:
+      "This project deepened my understanding of neural network internals by building each component from the ground up. I gained practical experience with React, TypeScript, and state management for real-time UI updates. Implementing backpropagation manually helped solidify key machine learning concepts. I also learned how to design user-friendly visualizations for complex topics, and improved my ability to communicate technical processes interactively. Hosting and deployment further taught me how to bring standalone projects to production.",
+  },
   "old-portfolio": {
     title: "Old Portfolio",
     summary: "A simple portfolio aimed at showcasing my projects and skills.",

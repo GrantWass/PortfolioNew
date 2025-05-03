@@ -83,8 +83,13 @@
   align-items: center;
 }
 
-/* Content Paragraph Styling */
-.content > p {
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.links > p {
   text-decoration: underline;
   font-size: 1.3rem;
   margin-top: -25px;
@@ -93,7 +98,21 @@
   font-style: italic;
 }
 
-.content > p:hover {
+.links > p:hover {
+  cursor: pointer;
+  color: black;
+}
+
+.links > a {
+  text-decoration: underline;
+  font-size: 1.3rem;
+  margin-top: -25px;
+  width: fit-content;
+  color: rgb(85, 84, 84);
+  font-style: italic;
+}
+
+.links > a:hover {
   cursor: pointer;
   color: black;
 }

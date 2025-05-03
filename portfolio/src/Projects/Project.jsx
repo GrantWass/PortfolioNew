@@ -25,7 +25,10 @@ export default function ClientSideProjects({project, index, activeProject}) {
                     <Image src={project.image} alt={project.title} height={700} width={400} priority/>
                 </div>
                 <h3>{project.title}</h3>
-                {project.title !== "Stock Analysis" && project.title !== "ScheduleLocal" ? <p onClick={() => handleProjectClick(project.slug)}>Learn More</p> : false}
+                <div className="links">
+                {project.title !== "ScheduleLocal" ? <p onClick={() => handleProjectClick(project.slug)}>Learn More</p> : false}
+                {project.title === "Interactive Neural Network" && <a href="https://nn-visual.com" target="_blank" rel="noopener noreferrer">nn-visual.com</a>}
+                </div>
                 <div className="technologies">
                     {project.technologies.map((tech, idx) => (
                     <span key={idx} style={{ color: tech.color }}>

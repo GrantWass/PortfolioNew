@@ -14,11 +14,18 @@ import {
   FaJava,
   FaSuperscript,
   FaBrain,
-  FaChartLine,
+  FaCalculator,
   FaRandom,
   FaDice,
   FaUserCog,
   FaCloud,
+  FaChartBar,
+  FaCube,
+  FaCubes,
+  FaFireAlt,
+  FaExchangeAlt,
+  FaRegCheckSquare,
+  
 } from "react-icons/fa";
 import { LuBrainCircuit } from "react-icons/lu";
 import {
@@ -75,6 +82,7 @@ export default function SkillGraph() {
         { name: "Pandas", icon: <SiPandas size={30} />, color: "#150458" },
         { name: "Sci-kit Learn", icon: <SiScikitlearn size={30} />, color: "#F7931E" },
         { name: "Neural Networks", icon: <FaBrain size={30} />, color: "#8E44AD" },
+        { name: "Apache Spark", icon: <FaFireAlt size={30} />, color: "#E25A1C" },
       ],
     },
     {
@@ -84,19 +92,32 @@ export default function SkillGraph() {
         { name: "AWS", icon: <FaAws size={30} />, color: "#FF9900" },
         { name: "Docker", icon: <FaDocker size={30} />, color: "#2496ED" },
         { name: "MongoDB", icon: <SiMongodb size={30} />, color: "#47A248" },
-        { name: "SQLite", icon: <SiSqlite size={30} />, color: "#003B57" },
+        { name: "MySQL", icon: <SiSqlite size={30} />, color: "#003B57" },
         { name: "Vercel", icon: <SiVercel size={30} />, color: "#000000" },
       ],
     },
     {
-      category: "Data & Math",
-      icon: <FaChartLine size={180} />,
+      category: "Math",
+      icon: <FaCalculator size={180} />,
       skills: [
         { name: "Probability", icon: <FaDice size={30} />, color: "#E74C3C" },
         { name: "Stochastic Processes", icon: <FaRandom size={30} />, color: "#27AE60" },
         { name: "Linear Algebra", icon: <FaSuperscript size={30} />, color: "#2980B9" },
-        { name: "Matplotlib", icon: <FaPython size={30} />, color: "#4C8CBF" },
+        { name: "Math Proofs", icon: <FaRegCheckSquare size={30} />, color: "#4C8CBF" },
+        { name: "Statistics", icon: <FaChartBar size={30} />, color: "#336791" },
+      ],
+    },
+    {
+      category: "Data",
+      icon: <FaChartBar size={180} />,
+      skills: [
         { name: "SQL", icon: <FaDatabase size={30} />, color: "#336791" },
+        { name: "Apache Hadoop", icon: <FaCube size={30} />, color: "#66CCFF" },
+        { name: "NoSQL", icon: <FaDatabase size={30} />, color: "#4DB33D" },
+        { name: "Big Data", icon: <FaCubes size={30} />, color: "#9B59B6" },
+        { name: "Apache Cassandra", icon: <FaDatabase size={30} />, color: "#1287B1" },
+        { name: "MongoDB", icon: <FaDatabase size={30} />, color: "#4DB33D" },
+        { name: "Apache Kafka", icon: <FaExchangeAlt size={30} />, color: "#231F20" },
       ],
     },
   ];

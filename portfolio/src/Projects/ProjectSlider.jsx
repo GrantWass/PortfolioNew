@@ -49,13 +49,15 @@ const projects = [
     ],
   },
   {
-    title: "Stock Analysis",
-    image: "/forecast.png",
-    slug: "stock-analysis",
+    title: "Interactive Neural Network",
+    image: "/nn.png",
+    slug: "neural-network",
     technologies: [
       { icon: <SiReact />, color: "#61DAFB" },
       { icon: <SiJavascript />, color: "#F7DF1E" },
-      { icon: <SiCsharp />, color: "#239120" },
+      { icon: <SiNextdotjs />, color: "#000000" },
+      { icon: <FaPython />, color: "#3776AB" },
+      { icon: <FaAws />, color: "#FF9900" },
     ],
   },
   {
