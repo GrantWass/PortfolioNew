@@ -52,7 +52,7 @@ export default function Header() {
           <a href="https://www.strava.com/athletes/39084065" target="_blank" rel="noopener noreferrer">
             <FaStrava className={`${styles.icon} ${styles.iconStrava}`} />
           </a>
-          <a href="/Resume.pdf" target="_blank" rel="noopener noreferrer">
+          <a href="/Resume_2025.pdf" target="_blank" rel="noopener noreferrer">
             <FaFileAlt className={`${styles.icon} ${styles.iconResume}`} />
           </a>
         </div>
