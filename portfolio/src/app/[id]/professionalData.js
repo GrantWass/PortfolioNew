@@ -31,7 +31,10 @@ const professionalData = {
     company: "Garmin",
     duration: "May 2025 - August 2025 · 3 months",
     location: "Internship",
-    tasks: [],
+    tasks: [
+      "Utilized open source AI tools to empower the workflows and vastly improve the efficiency of our cartographers",
+      "Spearheaded a novel AI-driven cartography project, presenting proof-of-concept demos to stakeholders and iterating based on cartographer feedback to guide adoption, refinement, and specific integrations",
+    ],
     image: "/garminHeaderNew.png",
   },
 };
