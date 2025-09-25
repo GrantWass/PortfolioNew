@@ -17,28 +17,29 @@ const popupContent = {
   Globe001: {
     title: 'Globe - Exploring the World',
     images: ["/travel1.JPG","/test1.jpg","/travel3.jpeg"],
-    description: 'I love traveling and exploring. I have a bad habit of extensively planning trips that will probably never go on...',
+    description: `I love traveling and exploring. Planning trips has always been a passion of mine, from mapping out routes to discovering hidden gems. While I often over-plan trips that may never happen, each plan reflects my curiosity and desire to explore the world around me. `,
   },
   'Monitor001|iMac|Dupli|': {
     title: 'Mac - My Coding Journey',
-    description: 'My journey to coding started my senior year of high school...',
+    description: `My journey into coding began during my senior year of high school, driven by curiosity and a desire to build things using my logical ability. Since then I have fell in love with building, problem solving, and working on things that matter.`
   },
   Plant_3: {
     title: 'Plant - Nature Enthusiast',
     images: ["/nature1.JPG","/nature2.JPG","/nature3.jpeg"],
-    description: 'This plant represents my love for nature...',
+    description: `This plant represents my connection to nature and the outdoors. It reflects my hobbies of hiking, running, and exploring the environment which I love to do with my friends and family. I enjoy photographing landscapes and nature and plan to buy a professional camera someday.`,
   },
   ShoeLeft: {
     title: 'Running Shoes - Collegiate Athlete',
     images: ["/xc1.png","/xc2.png","/xc3.JPG"],
-    description: 'Running has been a central part of my life, shaping who I am today...',
+    description: `Running has been a central part of my life, shaping discipline, endurance, and focus. Competing at the collegiate level has pushed me to balance academics, coding projects, and athletics. Through countless miles I have developed mental resilience, patience, and a strong understanding of myself.`,
   },
   ShoeRight: {
     title: 'Running Shoes - Collegiate Athlete',
     images: ["/xc1.png","/xc2.png","/xc3.JPG"],
-    description: 'Running has been a central part of my life, shaping who I am today...',
+    description: `Running has been a central part of my life, shaping discipline, endurance, and focus. Competing at the collegiate level has pushed me to balance academics, coding projects, and athletics. Through countless miles I have developed mental resilience, patience, and a strong understanding of myself.`,
   },
 };
+
 
 function Model(props) {
   const { scene } = useGLTF('/model.glb');
