@@ -51,7 +51,7 @@ export default function Home() {
 
         <section className={styles.section}>
           <h2>
-            Involvement <GiClick size={30} />
+            Extracurriculars <GiClick size={30} />
           </h2>
           <Involvements />
         </section>

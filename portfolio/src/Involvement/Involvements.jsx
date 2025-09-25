@@ -8,22 +8,22 @@ const involvements = [
     title: "Student Athlete",
     type: "Athletics & Teamwork",
     description:
-      "Competed year-round in indoor/outdoor track and Cross Country, balancing academics with athletic performance and contributing to team success.",
+      "Competed year-round in indoor/outdoor track and cross country, balancing academics with athletic performance, responsibilities as a captain, and contributing to team success.",
     image: "/xc.JPG"
   },
   {
-    title: "Initialize",
-    type: "Computer Science Education & Mentorship",
+    title: "Club Involvement",
+    type: "SAAC, Lead-N, Math Club",
     description:
-      "Volunteered to teach coding to young students, and engaged in discussions with peers to explore new ideas in technology and innovation.",
-    image: "/init.png"
+    "Actively contributed to student organizations by leading initiatives, mentoring younger peers, and fostering collaboration. From mentoring younger students, to engaging in leadership development through SAAC and Lead-N, these experiences strengthened my teamwork, communication, and problem-solving skills beyond the classroom.",
+    image: "/unlc.jpg"
   },
   {
     title: "Community Engagement",
     type: "Volunteerism & Civic Participation",
     description:
-      "Participated in six community service events over the past year, focusing on initiatives that improve local communities and foster civic responsibility.",
-    image: "/temp.jpg"
+      "Participated in various community service events over the past year, focusing on initiatives that leveverage our platform as an athlete to improve communities. Examples include Run Your City, Food Bank of Lincoln, and Link N Leaders.",
+    image: "/inv2.png"
   },
 ];
 
