@@ -85,6 +85,11 @@ export default function Home() {
           model: Desk by dook [CC-BY] via Poly Pizza.
         </p>
       </footer>
+
+      <div className={styles.tooltip}>
+        <GiClick size={18} />
+        <span>indicates this section is interactive</span>
+      </div>
     </div>
   );
 }
