@@ -1,5 +1,6 @@
 import styles from './header.module.css'; 
 import Image from 'next/image';
+import Link from 'next/link';
 import { FaLinkedin, FaInstagram, FaStrava, FaFileAlt, FaGithub } from 'react-icons/fa'; 
 import Headshot from '/public/Headshot.webp';
 import WordTransition from './WordTransition'; 
@@ -37,6 +38,11 @@ export default function Header() {
             <a href="tel:4025607989" className={styles.contactLink}>
               402-560-7989
             </a>
+          </span>
+          <span>
+            <Link href="/blog" className={styles.contactLink}>
+              Link to Blog
+            </Link>
           </span>
         </div>
         <div className={styles.iconsContainer}>

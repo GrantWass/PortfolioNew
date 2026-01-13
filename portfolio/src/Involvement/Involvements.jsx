@@ -23,7 +23,7 @@ const involvements = [
     type: "Volunteerism & Civic Participation",
     description:
       "Participated in various community service events over the past year, focusing on initiatives that leveverage our platform as an athlete to improve communities. Examples include Run Your City, Food Bank of Lincoln, and Link N Leaders.",
-    image: "/inv2.png"
+    image: "/inv3.png"
   },
 ];
 

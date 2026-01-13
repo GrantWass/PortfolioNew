@@ -103,6 +103,10 @@
   transform: scale(1.1); 
 }
 
+.iconBlog {
+  color: #667eea;
+}
+
 .contactText {
   display: flex;             
   flex-direction: column; 
