@@ -13,7 +13,7 @@ const experiences = [
     image: "/speedwayicon.png",
     link: "/speedway",
     start: 0,
-    end: 50,
+    end: 30,
     position: 'above',
     color: "purple"
   },
@@ -25,7 +25,7 @@ const experiences = [
     image: "/kiewiticon.png",
     link: "/kiewit",
     start: 12.5,
-    end: 50,
+    end: 30,
     position: 'below',
     color: "#FFCD23"
   },
@@ -36,8 +36,8 @@ const experiences = [
     dates: "May 2025 - August 2025",
     image: "/garminicon.png",
     link: "/garmin",
-    start: 50,
-    end: 62.5,
+    start: 30,
+    end: 55,
     position: 'above',
     color: "#6DCFF6"
   },
@@ -45,10 +45,10 @@ const experiences = [
     title: "Teaching Assistant",
     company: "UNL",
     type: "Student Worker",
-    dates: "August 2025 - December 2025",
+    dates: "August 2025 - May 2026",
     image: "/unl.png",
-    start: 62.5,
-    end: 79,
+    start: 55,
+    end: 87,
     position: 'below',
     color: "#FF4C4C" 
   },
@@ -58,11 +58,22 @@ const experiences = [
     type: "Design Studio",
     dates: "August 2025 - May 2026",
     image: "/sig.jpg",
-    start: 62.5,
-    end: 100,
+    start: 55,
+    end: 87,
     position: 'above',
     color: "#4CAF50" // green
   },
+  {
+    title: "Software Engineering Intern",
+    company: "Google",
+    type: "Internship",
+    dates: "May 2026 - August 2026",
+    image: "/sig.jpg",
+    start: 87,
+    end: 100,
+    position: 'below',
+    color: "#e6b63c" // orange
+  }
 ];
 
 

@@ -18,6 +18,24 @@
   transition: transform 0.1s, left 0.75s, top 0.75s, width 0.75s, height 0.75s;
 
   /* Default Item Positioning */
+  &:nth-child(6) {
+    display: none;
+  }
+  &:nth-child(7) {
+    display: none;
+  }
+  &:nth-child(8) {
+    display: none;
+  }
+  &:nth-child(9) {
+    display: none;
+  }
+  &:nth-child(10) {
+    display: none;
+  }
+  &:nth-child(11) {
+    display: none;
+  }
   &:nth-child(1),
   &:nth-child(2) {
     left: 0;

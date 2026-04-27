@@ -34,4 +34,55 @@ This summer, I&apos;ll be learning from some of the best in my profession at Goo
 More importantly, I&apos;ll spend these next few months traveling with some of my closest friends, competing in the sport I love, and making memories that will last a lifetime. From a walk-on with no computer science background to someone standing on the edge of my dreams, I&apos;m proud of how far I&apos;ve come — and I&apos;m just getting started.
     `,
   },
+  'teaching-calculus-taught-me-how-to-think-again': {
+    id: 'teaching-calculus-taught-me-how-to-think-again',
+    title: 'Teaching Calculus Taught Me How to Think Again',
+    date: 'April 26, 2026',
+    readTime: '6 min read',
+    content: `
+There&apos;s a specific kind of humbling that happens when you realize you can&apos;t explain something you&apos;ve known for years. That was me, week two of being a Learning Assistant for MATH 104, Applied Calculus, staring at a student who was looking back at me like I&apos;d just spoken in a foreign language. I had. It just happened to be mathematics.
+
+I came into the role feeling pretty confident. I&apos;d moved well past applied calculus in my own coursework, and I figured that would make things easier, more perspective, more tools, more ways to explain. What I didn&apos;t account for was that the distance between where I was and where my students were had become a gap I didn&apos;t automatically know how to bridge. I&apos;d forgotten what it felt like to see a derivative for the first time. I&apos;d internalized the intuition so thoroughly that I&apos;d lost the words for it.
+
+---
+
+## The Learning Curve Nobody Warned Me About
+
+The first few weeks in class and during office hours were a reality check. A student would ask me something like, "why does this rule even work?" and I&apos;d start down some path involving limits and formal definitions, technically correct, completely useless for where they were. I could see their eyes glaze over. I wasn&apos;t helping them understand, I was performing understanding, which is a very different thing.
+
+The struggle wasn&apos;t mathematical. It was translational. I had to learn how to meet people where they actually were, not where I assumed they should be or where I wished they were. That meant asking more questions before launching into explanations. What have you tried? What part feels off? Is it the setup or the algebra that&apos;s tripping you up? Slowing down at the front end saved everyone time on the back end.
+
+I also had to get comfortable with the fact that there&apos;s rarely just one way to explain something. Some students needed the visual, drawing the curve, sketching what the rate of change actually looked like in physical terms. Some needed the procedural steps written out cleanly and sequentially, no detours. Others needed the "why do I care about this" version before any of the mechanics would stick. Figuring out which mode a student needed, often within the first minute of a conversation, became one of the most interesting problems I faced in that role.
+
+---
+
+## Office Hours as a Different Kind of Classroom
+
+Office hours turned into some of my favorite parts of the experience. In class, the pace is set by the lecture and you&apos;re often catching students mid-confusion in real time. Office hours were slower, more conversational, and honestly more revealing about how people actually learn.
+
+I had students come in with a week&apos;s worth of built-up confusion all at once, and we&apos;d have to untangle which thread to pull first. I had students who&apos;d convinced themselves they were "just bad at math" before we&apos;d even looked at the problem together. One of the things I found myself doing a lot was separating the math anxiety from the math itself, because a lot of the time, the concept wasn&apos;t the real obstacle. The belief that the concept was impossible was.
+
+There were sessions that didn&apos;t go well. I&apos;d misjudge what a student needed, over-explain something simple, or not catch fast enough that they were nodding along without actually following. I made plenty of mistakes. But over time I got better at reading the room, or in this case, reading the person sitting across from me.
+
+---
+
+## The Moments That Made It Worth It
+
+The thing nobody fully prepares you for is how good it feels when it clicks for someone. Not because you explained it brilliantly, sometimes the explanation was pretty ordinary, but because you stuck with them through the confusion until something shifted. There&apos;s a specific look students get when a concept lands. A small pause, and then something visibly settles. I lived for that look.
+
+Some of my students came into review sessions barely holding on and left feeling like they actually had a shot at the exam. Watching someone go from "I have no idea what&apos;s happening" to working through a problem on their own, checking their own steps, trusting their own reasoning, that progression was genuinely exciting to be part of.
+
+I also found myself learning things. Not calculus, exactly, but something about the structure of ideas. When you&apos;re forced to explain why a rule works to someone who has no reason to take it on faith, you revisit your own understanding in a way that sitting through lectures never quite demands. My conceptual grip on things I thought I knew tightened because I had to defend them in plain terms.
+
+---
+
+## What I&apos;m Taking Away
+
+Being a Learning Assistant for MATH 104 quietly taught me things that don&apos;t show up in any curriculum. How to read someone&apos;s confusion and figure out what it&apos;s actually asking. How to adapt mid-explanation when something isn&apos;t landing. How to make a person feel capable rather than lost, which sometimes matters more than the mathematical content itself.
+
+I started the semester thinking the job was about knowing more than my students. I finished it understanding that the job was about communicating well, and that those two things have very little to do with each other. The math was never the hard part. The people were, in the best possible way.
+
+If you ever get the chance to teach something you know well, take it. Not because it helps others, though it does. Take it because it will make you think harder about what you actually know, and change the way you talk to people for a long time afterward.
+    `,
+  },
 };

@@ -74,6 +74,46 @@ const projectData = {
     whatILearned:
       "This project started as a way for me to learn web hosting on AWS. During this developement I was studying for an AWS Cloud Practicioner Certification and wanted to use this project as a way to apply my knowledge. This project cemented my passion for web development and software development as being able to see my work live on the internet was a very rewarding experience.",
   },
+  "travela": {
+    title: "Travela",
+    summary: "",
+    images: [
+    ],
+    whatIDid: [
+      ""
+    ],
+    whatILearned:
+      ""
+  },
+
+  "ultron": {
+    title: "",
+    summary: "",
+    images: [
+    ],
+    whatIDid: [
+      ""
+    ],
+    whatILearned:
+      ""
+  },
+
+  "polymarket-trading": {
+    title: "Polymarket Trading Algorithm",
+    summary: "A quantitative trading system that identifies pricing inefficiencies in prediction markets using probabilistic modeling and real-time market data.",
+    images: [
+    ],
+    whatIDid: [
+      "Developed a logistic regression model to predict short-term price direction using microstructure features (velocity, acceleration, volatility)",
+      "Engineered real-time features from high-frequency Binance websocket data streams",
+      "Designed an edge-based execution strategy comparing model probabilities vs market-implied probabilities",
+      "Backtested the strategy using a strict chronological split to avoid data leakage",
+      "Built a live trading pipeline with websocket ingestion, feature computation, and automated decision-making",
+      "Implemented fault-tolerant systems including retry logic, reconnect handling, and data gap detection"
+    ],
+    whatILearned:
+      "Learned how to build end-to-end quantitative trading systems, from data ingestion to execution. Gained experience in time-series modeling, calibration, and evaluating expected value rather than just accuracy. Also developed a strong understanding of real-world system challenges like latency, reliability, and market microstructure."
+  },
 };
 
 export default projectData;

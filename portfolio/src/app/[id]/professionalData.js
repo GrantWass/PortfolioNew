@@ -32,8 +32,19 @@ const professionalData = {
     duration: "May 2025 - August 2025 · 3 months",
     location: "Internship",
     tasks: [
-      "Utilized open source AI tools to empower the workflows and vastly improve the efficiency of our cartographers",
-      "Spearheaded a novel AI-driven cartography project, presenting proof-of-concept demos to stakeholders and iterating based on cartographer feedback to guide adoption, refinement, and specific integrations",
+      "Used open-source AI tools to streamline cartographers' workflows and significantly improve efficiency through automatic segmentation",
+      "Owned system design and project documentation, making key decisions about implementation approach, data storage, and workflow structure",
+      "Integrated modern tooling into a legacy C++ codebase, including an ONNX model and Python executables",
+      "Led an AI-driven cartography initiative, presenting proof-of-concept demos to stakeholders and refining the project based on cartographer feedback",
+    ],
+    image: "/garminHeaderNew.png",
+  },
+  google: {
+    title: "Software Eningeer",
+    company: "Google",
+    duration: "May 2026 - August 2026 · 3 months",
+    location: "Internship",
+    tasks: [
     ],
     image: "/garminHeaderNew.png",
   },

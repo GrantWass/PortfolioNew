@@ -9,7 +9,12 @@ const blogPosts = [
     date: 'January 10, 2026',
     readTime: '5 min read',
   },
-  // Add more blog posts here in the future
+  {
+    id: 'teaching-calculus-taught-me-how-to-think-again',
+    title: 'Teaching Calculus Taught Me How to Think Again',
+    date: 'April 26, 2026',
+    readTime: '6 min read'
+  }
 ];
 
 export const metadata = {
