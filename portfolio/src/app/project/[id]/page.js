@@ -83,6 +83,20 @@ export default function ProjectPage({ params }) {
             </a>
           </div>
         )}
+
+        {project.github && (
+          <div className={styles.section}>
+            <h2 className={styles.sectionTitle}>GitHub</h2>
+            <a
+              href={project.github}
+              className={styles.projectLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {project.github}
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

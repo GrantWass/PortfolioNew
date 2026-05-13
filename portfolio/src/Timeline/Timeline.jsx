@@ -13,9 +13,9 @@ const experiences = [
     image: "/speedwayicon.png",
     link: "/speedway",
     start: 0,
-    end: 30,
+    end: 25,
     position: 'above',
-    color: "purple"
+    color: "#b084cc"
   },
   {
     title: "Software Engineer",
@@ -25,7 +25,7 @@ const experiences = [
     image: "/kiewiticon.png",
     link: "/kiewit",
     start: 12.5,
-    end: 30,
+    end: 25,
     position: 'below',
     color: "#FFCD23"
   },
@@ -36,8 +36,8 @@ const experiences = [
     dates: "May 2025 - August 2025",
     image: "/garminicon.png",
     link: "/garmin",
-    start: 30,
-    end: 55,
+    start: 25,
+    end: 45,
     position: 'above',
     color: "#6DCFF6"
   },
@@ -47,8 +47,8 @@ const experiences = [
     type: "Student Worker",
     dates: "August 2025 - May 2026",
     image: "/unl.png",
-    start: 55,
-    end: 87,
+    start: 45,
+    end: 75,
     position: 'below',
     color: "#FF4C4C" 
   },
@@ -58,8 +58,8 @@ const experiences = [
     type: "Design Studio",
     dates: "August 2025 - May 2026",
     image: "/sig.jpg",
-    start: 55,
-    end: 87,
+    start: 45,
+    end: 75,
     position: 'above',
     color: "#4CAF50" // green
   },
@@ -68,8 +68,8 @@ const experiences = [
     company: "Google",
     type: "Internship",
     dates: "May 2026 - August 2026",
-    image: "/sig.jpg",
-    start: 87,
+    image: "/google.png",
+    start: 75,
     end: 100,
     position: 'below',
     color: "#e6b63c" // orange

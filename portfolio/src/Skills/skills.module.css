@@ -1,92 +1,113 @@
-.skillGraphContainer {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .categoryContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    margin: 4.5rem;
-  }
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "webdev webdev mlai"
+    "backend cloud  mlai"
+    "math    data   data";
+  gap: 1rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 3rem auto 2rem;
+}
 
-  .centralNode {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    cursor: pointer;
-    z-index: 2;
-    width: 125px;
-    height: 125px;
-    padding: 2rem;
-    transition: all 0.3s ease;
+.bentoCard {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-left: 3px solid var(--accent, #ccc);
+  border-radius: 14px;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.bentoCard:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
+  transform: translateY(-2px);
+}
+
+.webdev  { grid-area: webdev; }
+.backend { grid-area: backend; }
+.mlai    { grid-area: mlai; }
+.cloud   { grid-area: cloud; }
+.math    { grid-area: math; }
+.data    { grid-area: data; }
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.categoryIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.categoryTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0;
+  color: #111;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.skillsWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.skillChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: #f4f4f5;
+  border-radius: 999px;
+  transition: background 0.15s ease;
+  cursor: default;
+}
+
+.skillChip:hover {
+  background: #e9e9eb;
+}
+
+.chipLabel {
+  font-size: 0.78rem;
+  color: #333;
+  font-weight: 500;
+  white-space: nowrap;
+  font-family: 'Lato', sans-serif;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .bentoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "webdev  webdev"
+      "mlai    mlai"
+      "backend cloud"
+      "math    math"
+      "data    data";
   }
-  
-  .centralNode:hover {
-    transform: scale(1.1);
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .bentoGrid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "webdev"
+      "backend"
+      "mlai"
+      "cloud"
+      "math"
+      "data";
   }
-  
-  .centralNode .categoryIcon {
-    margin-bottom: 0.5rem; 
-    transition: transform 0.3s ease;
-  }
-  
-  .centralNode h2 {
-    font-size: 1.2rem; 
-    margin: 0;
-    text-align: center;
-  }
-  
-  
-  .circularLayout {
-    position: absolute;
-    width: 375px;
-    height: 400px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.6s ease;
-    pointer-events: none; 
-  }
-  
-  .expanded {
-    pointer-events: auto;
-  }
-  
-  .skillNode {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 50%;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
-    width: 75px;
-    height: 75px;
-    position: absolute;
-    transform-origin: center center;
-    z-index: 1;
-    opacity: 0;
-  }
-  
-  .expanded .skillNode {
-    opacity: 1;
-  }
-  
-  .skillName {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    text-align: center;
-    color: black;
-  }
-  
+}

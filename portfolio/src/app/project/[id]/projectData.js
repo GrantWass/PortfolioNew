@@ -76,44 +76,35 @@ const projectData = {
   },
   "travela": {
     title: "Travela",
-    summary: "",
-    images: [
-    ],
+    summary: "Social travel planning on an interactive map. See where friends actually went, what they did, and where they stayed — built for travelers looking for real, affordable trip inspiration.",
+    images: ["/travela_home.png", "/travela_trip.png"],
     whatIDid: [
-      ""
+      "Built a map-first travel discovery app where users add trips, activities, and lodging notes as pop-ups on an interactive world map",
+      "Implemented friend-based filtering so users can view all travelers, just their friends, or just their own trips",
+      "Designed the full-stack architecture using Next.js and deployed on Vercel",
     ],
     whatILearned:
-      ""
+      "A social travel discovery app that turns trip planning into a map-first experience. Fills the gap between Google Maps (logistics-led) and TripAdvisor (review-led) with something story-led and people-led. Building this taught me how to design around real user behavior — people want to see what their friends actually did, not curated reviews from strangers.",
+    url: "https://travel-map-nine.vercel.app/",
+    github: "https://github.com/GrantWass/travel-map",
   },
 
   "ultron": {
-    title: "",
-    summary: "",
-    images: [
-    ],
+    title: "Ultron",
+    summary: "AI-powered error tracking for JavaScript apps. Drop-in SDK that captures errors, network requests, Web Vitals, and session replay — with AI fix suggestions that read your actual source code.",
+    images: ["./ultron_home.png", "./ultron.png"],
     whatIDid: [
-      ""
+      "Built a lightweight SDK that installs in under a minute and captures unhandled JavaScript errors, network failures, Web Vitals, and session replay",
+      "Integrated Claude to generate AI fix suggestions by connecting a GitHub repository and reading actual source code — not generic stack trace analysis",
+      "Designed the full-stack platform with Next.js and Supabase, including authentication, billing via Stripe, and event ingestion via AWS Lambda",
+      "Architected the SDK to be a drop-in alternative to Sentry with a smaller footprint and smarter error context",
     ],
     whatILearned:
-      ""
+      "A full-stack error monitoring platform built as a lightweight alternative to Sentry. The differentiator is AI-generated fix suggestions: connect a GitHub repository and the AI reads the actual source to propose real code fixes — not boilerplate advice based on stack traces. Building this taught me how to design SDK ergonomics, manage event pipelines at scale, and integrate LLMs into a product flow in a way that's genuinely useful rather than a gimmick.",
+    url: "https://ultron.live",
+    github: "https://github.com/GrantWass/ultron",
   },
 
-  "polymarket-trading": {
-    title: "Polymarket Trading Algorithm",
-    summary: "A quantitative trading system that identifies pricing inefficiencies in prediction markets using probabilistic modeling and real-time market data.",
-    images: [
-    ],
-    whatIDid: [
-      "Developed a logistic regression model to predict short-term price direction using microstructure features (velocity, acceleration, volatility)",
-      "Engineered real-time features from high-frequency Binance websocket data streams",
-      "Designed an edge-based execution strategy comparing model probabilities vs market-implied probabilities",
-      "Backtested the strategy using a strict chronological split to avoid data leakage",
-      "Built a live trading pipeline with websocket ingestion, feature computation, and automated decision-making",
-      "Implemented fault-tolerant systems including retry logic, reconnect handling, and data gap detection"
-    ],
-    whatILearned:
-      "Learned how to build end-to-end quantitative trading systems, from data ingestion to execution. Gained experience in time-series modeling, calibration, and evaluating expected value rather than just accuracy. Also developed a strong understanding of real-world system challenges like latency, reliability, and market microstructure."
-  },
 };
 
 export default projectData;

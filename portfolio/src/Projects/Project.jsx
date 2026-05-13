@@ -26,7 +26,7 @@ export default function ClientSideProjects({project, index, activeProject}) {
                 </div>
                 <h3>{project.title}</h3>
                 <div className="links">
-                {project.title !== "ScheduleLocal" ? <p onClick={() => handleProjectClick(project.slug)}>Learn More</p> : false}
+                <p onClick={() => handleProjectClick(project.slug)}>Learn More</p>
                 {project.title === "Interactive Neural Network" && <a href="https://nn-visual.com" target="_blank" rel="noopener noreferrer">nn-visual.com</a>}
                 </div>
                 <div className="technologies">

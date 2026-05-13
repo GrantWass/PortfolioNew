@@ -3,7 +3,6 @@ import styles from "./home.module.css";
 import Education from "../Education/Education";
 import Timeline from "../Timeline/Timeline";
 import Model from "../Model/DeskModel";
-import Involvements from "@/Involvement/Involvements";
 import SkillMap from "@/Skills/Skills";
 import { GiClick } from "react-icons/gi";
 import Projects from "../Projects/ProjectSlider";
@@ -47,13 +46,6 @@ export default function Home() {
             Professional Experience <GiClick size={30} />
           </h2>
           <Timeline />
-        </section>
-
-        <section className={styles.section}>
-          <h2>
-            Extracurriculars <GiClick size={30} />
-          </h2>
-          <Involvements />
         </section>
 
         <section

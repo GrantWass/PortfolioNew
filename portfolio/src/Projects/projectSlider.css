@@ -321,12 +321,13 @@
   .main{
     left:0;
     height: 650px;
+    margin-bottom: 0;
   }
   .item {
     width: 250px;
     height: 160px;
     margin-top: -100px;
-  
+
     &:nth-child(3) {
       left: 10%;
       top: 90%;
@@ -349,7 +350,6 @@
     color: black;
     font-style: italic;
     font-weight: normal;
-    transform: rotate(0deg);
     transform: translateX(-50%);
     white-space: nowrap;
   }
@@ -357,13 +357,14 @@
     width: 90%;
     left: 5%;
   }
+  /* Keep icons in-flow and horizontal so they don't clip off the left edge */
   .technologies{
-    position: absolute;
+    position: relative;
     display: flex;
-    flex-direction: column;
-    top: 45%;
-    left: -1.5rem; 
-    transform: translateY(-50%);
+    flex-direction: row;
+    top: auto;
+    left: 0;
+    transform: none;
   }
   .technologies > span {
     font-size: 2.5rem;
@@ -371,9 +372,6 @@
   .move{
     top: 93%;
     left: 57%;
-  }
-  .main{
-    margin-bottom: 0;
   }
 }
 
@@ -406,50 +404,6 @@
 @media (max-width: 500px) {
   .main {
     left: -2rem;
-    margin-bottom: -7rem;
-  }
-  .content{
-    width: 95%;
-    height: 300px;
-    margin-top: -4rem;
-  }
-  .content > h3{
-    margin-top: 0.5rem;
-  }
-  .item {
-  
-    &:nth-child(3) {
-      left: 5%;
-      top: 70%;
-    }
-    &:nth-child(4) {
-      left: 30%;
-      top: calc(70% + 2.5px);
-      height: 150px;
-    }
-    &:nth-child(5) {
-      left: 60%;
-      top: calc(70% + 5px);
-      height: 140px;
-    }
-  }
-  .sideContentTitle{
-    font-size: 0.75rem;
-  }
-  .technologies{
-    left: -0.75rem; 
-  }
-  .technologies > span {
-    font-size: 2rem;
-  }
-  .move{
-    top: 73%;
-  }
-}
-
-@media (max-width: 500px) {
-  .main {
-    left: -2rem;
     margin-bottom: -12rem;
   }
   .content{
@@ -462,7 +416,7 @@
   .item {
     width: 225px;
     height: 135px;
-  
+
     &:nth-child(3) {
       left: 8%;
       top: 65%;
@@ -480,6 +434,9 @@
   }
   .sideContentTitle{
     display: none;
+  }
+  .technologies > span {
+    font-size: 2rem;
   }
   .move{
     top: 62%;

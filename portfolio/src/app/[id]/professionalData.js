@@ -40,13 +40,13 @@ const professionalData = {
     image: "/garminHeaderNew.png",
   },
   google: {
-    title: "Software Eningeer",
+    title: "Software Engineer",
     company: "Google",
     duration: "May 2026 - August 2026 · 3 months",
     location: "Internship",
     tasks: [
     ],
-    image: "/garminHeaderNew.png",
+    image: "/google_header.png",
   },
 };
 

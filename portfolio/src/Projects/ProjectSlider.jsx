@@ -5,28 +5,17 @@ import {
   SiReact,
   SiJavascript,
   SiNextdotjs,
-  SiDotnet,
   SiTypescript,
-  SiCsharp,
   SiMongodb,
+  SiVercel,
+  SiSupabase,
+  SiStripe,
+  SiOpenai,
 } from "react-icons/si";
-import { TbSql } from "react-icons/tb";
 import Project from "./Project";
 import "./projectSlider.css";
 
 const projects = [
-  {
-    title: "ScheduleLocal",
-    image: "/scheduleLocal.png",
-    slug: "schedulelocal",
-    technologies: [
-      { icon: <SiReact />, color: "#61DAFB" },
-      { icon: <SiJavascript />, color: "#F7DF1E" },
-      { icon: <TbSql />, color: "#F29111" },
-      { icon: <SiCsharp />, color: "#239120" },
-      { icon: <SiDotnet />, color: "#512BD4" },
-    ],
-  },
   {
     title: "Run Tracker",
     image: "/heatmap.png",
@@ -60,32 +49,24 @@ const projects = [
   },
   {
     title: "Travela",
-    image: "/old1.png",
+    image: "/travela_trip.png",
     slug: "travela",
     technologies: [
-      { icon: <SiTypescript />, color: "#007ACC" },
-      { icon: <FaAws />, color: "#FF9900" },
-      { icon: <TbSql />, color: "#F29111" },
-    ],
-  },
-  {
-    title: "Polymarket Trading Algo",
-    image: "/old1.png",
-    slug: "polymarket-algo",
-    technologies: [
-      { icon: <FaPython />, color: "#3776AB" },
-      { icon: <FaAws />, color: "#FF9900" },
+      { icon: <SiNextdotjs />, color: "#000000" },
+      { icon: <SiVercel />, color: "#000000" },
     ],
   },
   {
     title: "Ultron",
-    image: "/old1.png",
+    image: "/ultron_home.png",
     slug: "ultron",
     technologies: [
-      { icon: <FaPython />, color: "#3776AB" },
       { icon: <SiTypescript />, color: "#007ACC" },
+      { icon: <SiNextdotjs />, color: "#000000" },
+      { icon: <SiSupabase />, color: "#3ECF8E" },
+      { icon: <SiStripe />, color: "#635BFF" },
+      { icon: <SiOpenai />, color: "#412991" },
       { icon: <FaAws />, color: "#FF9900" },
-      { icon: <TbSql />, color: "#F29111" },
     ],
   },
   {

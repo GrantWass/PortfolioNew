@@ -100,6 +100,33 @@
     color: white
   }
 
+  @media (max-width: 768px) {
+    .pageContainer {
+      padding: 2rem 0.75rem;
+    }
+    .contentWrapper {
+      padding: 1.5rem 1.25rem;
+    }
+    .title {
+      font-size: 1.75rem;
+      margin-top: 100px;
+    }
+    .company {
+      font-size: 1.5rem;
+    }
+    .duration,
+    .location {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .sectionTitle {
+      font-size: 1.5rem;
+    }
+    .bulletList li {
+      font-size: 1rem;
+    }
+  }
+
   .headerImage {
     position: absolute; 
     top: 0; 
