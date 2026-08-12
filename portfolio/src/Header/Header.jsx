@@ -46,19 +46,19 @@ export default function Header() {
           </span>
         </div>
         <div className={styles.iconsContainer}>
-          <a href="https://github.com/GrantWass" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/GrantWass" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
             <FaGithub className={`${styles.icon} ${styles.iconGithub}`} />
           </a>
-          <a href="https://www.linkedin.com/in/grant-wass/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/grant-wass/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <FaLinkedin className={`${styles.icon} ${styles.iconLinkedin}`} />
           </a>
-          <a href="https://www.instagram.com/gran_t12/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/gran_t12/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <FaInstagram className={`${styles.icon} ${styles.iconInstagram}`} />
           </a>
-          <a href="https://www.strava.com/athletes/39084065" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.strava.com/athletes/39084065" target="_blank" rel="noopener noreferrer" aria-label="Strava">
             <FaStrava className={`${styles.icon} ${styles.iconStrava}`} />
           </a>
-          <a href="/Resume_2025.pdf" target="_blank" rel="noopener noreferrer">
+          <a href="/Resume_2025.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume">
             <FaFileAlt className={`${styles.icon} ${styles.iconResume}`} />
           </a>
         </div>
