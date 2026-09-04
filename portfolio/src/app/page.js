@@ -2,7 +2,7 @@ import Header from "../Header/Header";
 import styles from "./home.module.css";
 import Education from "../Education/Education";
 import Timeline from "../Timeline/Timeline";
-import Model from "../Model/DeskModel";
+import Model from "../Model/DeskSection";
 import SkillMap from "@/Skills/Skills";
 import { GiClick } from "react-icons/gi";
 import Projects from "../Projects/ProjectSlider";

@@ -123,7 +123,7 @@ const ThreeDModel = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.container}>
-        <Canvas camera={{ position: [0, 5, 5] }}>
+        <Canvas dpr={[1, 1.75]} camera={{ position: [0, 5, 5] }}>
           <Suspense fallback={null}>
             <ambientLight intensity={1} />
             <directionalLight position={[0, 10, 5]} intensity={1.5} />
