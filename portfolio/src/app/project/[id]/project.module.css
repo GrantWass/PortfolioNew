@@ -64,6 +64,24 @@
     transform: translateY(-10px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
+
+  .thumbnailButton {
+    width: calc(33% - 1.5rem);
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 12px;
+  }
+
+  .thumbnailButton .image {
+    width: 100%;
+  }
+
+  .thumbnailButton:focus-visible {
+    outline: 3px solid #ff6600;
+    outline-offset: 3px;
+  }
   
     .modal {
     position: fixed;     
@@ -108,6 +126,11 @@
   
   .close:hover {
     color: #ff6600;   
+  }
+
+  .close:focus-visible {
+    outline: 3px solid #ff6600;
+    outline-offset: 2px;
   }
   
   body.modal-open {
@@ -246,6 +269,10 @@
 
   .image {
     width: 100%;   
+  }
+
+  .thumbnailButton {
+    width: 100%;
   }
 
   .modalContent {
