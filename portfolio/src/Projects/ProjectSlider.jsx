@@ -130,8 +130,8 @@ const Home = () => {
         ))}
       </ul>
       <div className="move">
-        <button className="btn prev arrow">➔</button>
-        <button className="btn next arrow">➔</button>
+        <button className="btn prev arrow" aria-label="Show previous project">➔</button>
+        <button className="btn next arrow" aria-label="Show next project">➔</button>
       </div>
     </div>
   );
