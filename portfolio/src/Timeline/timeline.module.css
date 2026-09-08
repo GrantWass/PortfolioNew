@@ -66,9 +66,28 @@
     border-radius: 50%;
   }
 
-  .image:hover{
+  .imageLink{
+    border-radius: 50%;
+    display: inline-block;
+    line-height: 0;
+    flex-shrink: 0;
+  }
+
+  .imageLink:hover{
     cursor: pointer;
-    transform: scale(1.1); 
+  }
+
+  .imageLink:hover .image{
+    transform: scale(1.1);
+  }
+
+  .imageLink:focus-visible{
+    outline: 3px solid #1a73e8;
+    outline-offset: 3px;
+  }
+
+  .imageLink:focus-visible .image{
+    transform: scale(1.1);
   }
 
   .eventDescription{
