@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import styles from './timeline.module.css';
 import Image from 'next/image'
 
@@ -108,24 +108,25 @@ const Timeline = () => {
 };
 
 const Event = ({event}) => {
-    const router = useRouter();
-
-    const handleClick = (link) => {
-      if (link != ""){
-        router.push(link);
-      }
-    };
+    const logo = (
+        <Image
+            src={event.image}
+            height={100}
+            width={100}
+            className={styles.image}
+            alt={event.company}
+        />
+    );
 
     return (
         <div className={`${styles.event} ${event.position === 'above' ? styles.cardAbove : styles.cardBelow}`}>
-            <Image
-                src={event.image}
-                height={100}
-                width={100}
-                className={styles.image}
-                onClick={() => handleClick(event.link ?? "")}
-                alt={event.company}
-            />
+            {event.link ? (
+                <Link href={event.link} className={styles.imageLink}>
+                    {logo}
+                </Link>
+            ) : (
+                logo
+            )}
             <div className={styles.eventDescription}>
                 <h2>{event.company}</h2>
                 <p className={styles.role}>{event.title}</p>
