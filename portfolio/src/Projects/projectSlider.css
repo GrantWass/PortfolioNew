@@ -173,6 +173,8 @@
   left: 60%;
   transform: translateX(-50%);
   z-index: 5;
+  display: flex;
+  align-items: center;
 
   & .btn {
     background-color: rgba(255, 255, 255, 0.5);
@@ -187,6 +189,21 @@
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.6);
     color: rgba(255, 255, 255, 0.9);
+  }
+
+  & .pause-btn {
+    min-width: 3.25rem;
+    min-height: 3.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  & .pause-btn:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
   }
 }
 
@@ -248,6 +265,18 @@
   font-weight: normal;
   transform: rotate(90deg);
   white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+  .item:nth-of-type(2) .content {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: translateY(-50%);
+  }
 }
 
 @media (max-width: 1300px) {
