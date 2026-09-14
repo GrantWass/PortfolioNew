@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPython, FaAws } from "react-icons/fa";
 import {
   SiReact,
@@ -84,16 +84,35 @@ const projects = [
 
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
-  
+  const [autoPaused, setAutoPaused] = useState(false);
+  const manualPausedRef = useRef(false);
+  const toggleAutoRef = useRef(null);
+
   useEffect(() => {
+    const container = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    if (!container || !slider || !prevButton || !nextButton) return;
+
     let intervalId;
-  
-    const startAutoSlide = () => {
+    let hoverPaused = false;
+    let focusPaused = false;
+    let motionPaused = reducedMotion.matches;
+    manualPausedRef.current = false;
+
+    const shouldPause = () => manualPausedRef.current || motionPaused || hoverPaused || focusPaused;
+
+    const stopAutoSlide = () => {
       clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      if (shouldPause() || !nextButton) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
@@ -112,13 +131,61 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-  
+
+    const handleMouseEnter = () => {
+      hoverPaused = true;
+      stopAutoSlide();
+    };
+    const handleMouseLeave = () => {
+      hoverPaused = false;
+      startAutoSlide();
+    };
+    const handleFocusIn = () => {
+      focusPaused = true;
+      stopAutoSlide();
+    };
+    const handleFocusOut = () => {
+      focusPaused = false;
+      startAutoSlide();
+    };
+    const handleMotionChange = (e) => {
+      motionPaused = e.matches;
+      setAutoPaused(manualPausedRef.current || e.matches);
+      if (e.matches) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+    const handleManualToggle = () => {
+      manualPausedRef.current = !manualPausedRef.current;
+      setAutoPaused(manualPausedRef.current || motionPaused);
+      if (manualPausedRef.current) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+    toggleAutoRef.current = handleManualToggle;
+
+    container.addEventListener("mouseenter", handleMouseEnter);
+    container.addEventListener("mouseleave", handleMouseLeave);
+    container.addEventListener("focusin", handleFocusIn);
+    container.addEventListener("focusout", handleFocusOut);
+    reducedMotion.addEventListener("change", handleMotionChange);
+    setAutoPaused(manualPausedRef.current || motionPaused);
+
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      container.removeEventListener("mouseenter", handleMouseEnter);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      container.removeEventListener("focusin", handleFocusIn);
+      container.removeEventListener("focusout", handleFocusOut);
+      reducedMotion.removeEventListener("change", handleMotionChange);
+      stopAutoSlide();
     };
   }, []);
   
@@ -132,6 +199,15 @@ const Home = () => {
       <div className="move">
         <button className="btn prev arrow" aria-label="Show previous project">➔</button>
         <button className="btn next arrow" aria-label="Show next project">➔</button>
+        <button
+          type="button"
+          className="btn autoplay-toggle"
+          aria-label={autoPaused ? "Play automatic project rotation" : "Pause automatic project rotation"}
+          aria-pressed={autoPaused}
+          onClick={() => toggleAutoRef.current?.()}
+        >
+          {autoPaused ? "▶" : "❚❚"}
+        </button>
       </div>
     </div>
   );
