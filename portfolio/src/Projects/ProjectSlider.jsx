@@ -86,14 +86,28 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
   
   useEffect(() => {
+    const main = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    if (!main || !slider || !prevButton || !nextButton) return;
+
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let intervalId;
-  
-    const startAutoSlide = () => {
+    let isHovered = false;
+    let hasFocus = false;
+
+    const autoplayAllowed = () =>
+      !reducedMotionQuery.matches && !isHovered && !hasFocus && !document.hidden;
+
+    const stopAutoSlide = () => {
       clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      if (!autoplayAllowed()) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
@@ -109,16 +123,60 @@ const Home = () => {
       setActiveProject(slider.children[1].querySelector('h3').textContent);
       startAutoSlide(); 
     };
+
+    const handleMouseEnter = () => {
+      isHovered = true;
+      stopAutoSlide();
+    };
+    const handleMouseLeave = () => {
+      isHovered = false;
+      startAutoSlide();
+    };
+    const handleFocusIn = () => {
+      hasFocus = true;
+      stopAutoSlide();
+    };
+    const handleFocusOut = (e) => {
+      if (e.relatedTarget && main.contains(e.relatedTarget)) return;
+      hasFocus = false;
+      startAutoSlide();
+    };
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+    const handleReducedMotionChange = () => {
+      if (reducedMotionQuery.matches) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+    main.addEventListener("mouseenter", handleMouseEnter);
+    main.addEventListener("mouseleave", handleMouseLeave);
+    main.addEventListener("focusin", handleFocusIn);
+    main.addEventListener("focusout", handleFocusOut);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    reducedMotionQuery.addEventListener("change", handleReducedMotionChange);
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      main.removeEventListener("mouseenter", handleMouseEnter);
+      main.removeEventListener("mouseleave", handleMouseLeave);
+      main.removeEventListener("focusin", handleFocusIn);
+      main.removeEventListener("focusout", handleFocusOut);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      reducedMotionQuery.removeEventListener("change", handleReducedMotionChange);
+      stopAutoSlide();
     };
   }, []);
   
