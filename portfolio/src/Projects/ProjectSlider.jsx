@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPython, FaAws } from "react-icons/fa";
 import {
   SiReact,
@@ -84,21 +84,41 @@ const projects = [
 
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
-  
+  const [userPaused, setUserPaused] = useState(false);
+  const [motionReduced, setMotionReduced] = useState(false);
+  const containerRef = useRef(null);
+  const hoverPausedRef = useRef(false);
+  const pausedRef = useRef(false);
+
+  const autoplayPaused = userPaused || motionReduced;
+
   useEffect(() => {
+    const container = containerRef.current;
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    if (!container || !slider || !prevButton || !nextButton) return;
+
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // Sync the imperative timer guard before the first startAutoSlide() call
+    // so a reduced-motion preference never starts the timer, even on mount.
+    pausedRef.current = userPaused || media.matches;
+    setMotionReduced(media.matches);
+
     let intervalId;
-  
+
+    const stopAutoSlide = () => {
+      clearInterval(intervalId);
+    };
+
     const startAutoSlide = () => {
       clearInterval(intervalId);
+      if (pausedRef.current || hoverPausedRef.current || document.hidden) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
     };
-  
+
     const activate = (e) => {
       const items = document.querySelectorAll(".item");
       if (e.target.matches(".next")) {
@@ -107,23 +127,69 @@ const Home = () => {
         slider.prepend(items[items.length - 1]);
       }
       setActiveProject(slider.children[1].querySelector('h3').textContent);
-      startAutoSlide(); 
+      startAutoSlide();
     };
-  
+
+    const handleMouseEnter = () => {
+      hoverPausedRef.current = true;
+      stopAutoSlide();
+    };
+    const handleMouseLeave = () => {
+      hoverPausedRef.current = false;
+      startAutoSlide();
+    };
+    const handleFocusIn = () => {
+      hoverPausedRef.current = true;
+      stopAutoSlide();
+    };
+    const handleFocusOut = (e) => {
+      if (e.currentTarget.contains(e.relatedTarget)) return;
+      hoverPausedRef.current = false;
+      startAutoSlide();
+    };
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+    const handleMotionChange = (e) => {
+      setMotionReduced(e.matches);
+      pausedRef.current = userPaused || e.matches;
+      if (e.matches) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-  
-    startAutoSlide(); 
-  
+    container.addEventListener("mouseenter", handleMouseEnter);
+    container.addEventListener("mouseleave", handleMouseLeave);
+    container.addEventListener("focusin", handleFocusIn);
+    container.addEventListener("focusout", handleFocusOut);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    media.addEventListener("change", handleMotionChange);
+
+    startAutoSlide();
+
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
+      container.removeEventListener("mouseenter", handleMouseEnter);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      container.removeEventListener("focusin", handleFocusIn);
+      container.removeEventListener("focusout", handleFocusOut);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      media.removeEventListener("change", handleMotionChange);
       clearInterval(intervalId);
     };
-  }, []);
-  
+  }, [userPaused]);
+
   return (
-    <div className="main">
+    <div className="main" ref={containerRef}>
       <ul className="slider">
         {projects.map((project, index) => (
           <Project key={index} project={project} index={index} activeProject={activeProject} />
@@ -131,6 +197,15 @@ const Home = () => {
       </ul>
       <div className="move">
         <button className="btn prev arrow" aria-label="Show previous project">➔</button>
+        <button
+          className="btn autoplay"
+          type="button"
+          aria-pressed={autoplayPaused}
+          aria-label={autoplayPaused ? "Play automatic slide rotation" : "Pause automatic slide rotation"}
+          onClick={() => setUserPaused((v) => !v)}
+        >
+          {autoplayPaused ? "▶" : "❚❚"}
+        </button>
         <button className="btn next arrow" aria-label="Show next project">➔</button>
       </div>
     </div>
