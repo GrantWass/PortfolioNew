@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPython, FaAws } from "react-icons/fa";
 import {
   SiReact,
@@ -84,47 +84,119 @@ const projects = [
 
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
-  
+  const [isPaused, setIsPaused] = useState(false);
+  const mainRef = useRef(null);
+  const sliderRef = useRef(null);
+  const pausedRef = useRef(false);
+  const hoverFocusPausedRef = useRef(false);
+  const reducedMotionRef = useRef(false);
+
   useEffect(() => {
-    const slider = document.querySelector(".slider");
-    const prevButton = document.querySelector(".prev");
-    const nextButton = document.querySelector(".next");
-  
+    pausedRef.current = isPaused;
+  }, [isPaused]);
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    const main = mainRef.current;
+    if (!slider || !main) return;
+
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncMotion = () => {
+      reducedMotionRef.current = mq.matches;
+    };
+    syncMotion();
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", syncMotion);
+    } else if (typeof mq.addListener === "function") {
+      mq.addListener(syncMotion);
+    }
+
     let intervalId;
-  
+
+    const updateActive = () => {
+      const label = slider.children[1]?.querySelector("h3")?.textContent;
+      if (label) setActiveProject(label);
+    };
+
+    const goNext = () => {
+      const items = slider.querySelectorAll(".item");
+      if (items.length > 0) slider.append(items[0]);
+      updateActive();
+    };
+
+    const goPrev = () => {
+      const items = slider.querySelectorAll(".item");
+      if (items.length > 0) slider.prepend(items[items.length - 1]);
+      updateActive();
+    };
+
+    const shouldPause = () =>
+      pausedRef.current ||
+      hoverFocusPausedRef.current ||
+      reducedMotionRef.current ||
+      document.hidden;
+
     const startAutoSlide = () => {
       clearInterval(intervalId);
       intervalId = setInterval(() => {
-        nextButton.click();
+        if (!shouldPause()) goNext();
       }, 8000);
     };
-  
+
     const activate = (e) => {
-      const items = document.querySelectorAll(".item");
-      if (e.target.matches(".next")) {
-        slider.append(items[0]);
-      } else if (e.target.matches(".prev")) {
-        slider.prepend(items[items.length - 1]);
+      const btn = e.target?.closest?.(".next, .prev");
+      if (btn?.classList.contains("next")) {
+        goNext();
+      } else if (btn?.classList.contains("prev")) {
+        goPrev();
       }
-      setActiveProject(slider.children[1].querySelector('h3').textContent);
-      startAutoSlide(); 
+      startAutoSlide();
     };
-  
-    prevButton.addEventListener("click", activate);
-    nextButton.addEventListener("click", activate);
-  
-    startAutoSlide(); 
-  
+
+    const prevButton = main.querySelector(".prev");
+    const nextButton = main.querySelector(".next");
+
+    const handleMouseEnter = () => {
+      hoverFocusPausedRef.current = true;
+    };
+    const handleMouseLeave = () => {
+      hoverFocusPausedRef.current = false;
+    };
+    const handleFocusIn = () => {
+      hoverFocusPausedRef.current = true;
+    };
+    const handleFocusOut = (e) => {
+      if (!main.contains(e.relatedTarget)) hoverFocusPausedRef.current = false;
+    };
+
+    prevButton?.addEventListener("click", activate);
+    nextButton?.addEventListener("click", activate);
+    main.addEventListener("mouseenter", handleMouseEnter);
+    main.addEventListener("mouseleave", handleMouseLeave);
+    main.addEventListener("focusin", handleFocusIn);
+    main.addEventListener("focusout", handleFocusOut);
+
+    startAutoSlide();
+
     return () => {
-      prevButton.removeEventListener("click", activate);
-      nextButton.removeEventListener("click", activate);
+      prevButton?.removeEventListener("click", activate);
+      nextButton?.removeEventListener("click", activate);
+      main.removeEventListener("mouseenter", handleMouseEnter);
+      main.removeEventListener("mouseleave", handleMouseLeave);
+      main.removeEventListener("focusin", handleFocusIn);
+      main.removeEventListener("focusout", handleFocusOut);
+      if (typeof mq.removeEventListener === "function") {
+        mq.removeEventListener("change", syncMotion);
+      } else if (typeof mq.removeListener === "function") {
+        mq.removeListener(syncMotion);
+      }
       clearInterval(intervalId);
     };
   }, []);
   
   return (
-    <div className="main">
-      <ul className="slider">
+    <div className="main" ref={mainRef}>
+      <ul className="slider" ref={sliderRef}>
         {projects.map((project, index) => (
           <Project key={index} project={project} index={index} activeProject={activeProject} />
         ))}
@@ -132,6 +204,15 @@ const Home = () => {
       <div className="move">
         <button className="btn prev arrow" aria-label="Show previous project">➔</button>
         <button className="btn next arrow" aria-label="Show next project">➔</button>
+        <button
+          type="button"
+          className="btn pause"
+          aria-pressed={isPaused}
+          aria-label={isPaused ? "Play automatic slide rotation" : "Pause automatic slide rotation"}
+          onClick={() => setIsPaused((v) => !v)}
+        >
+          {isPaused ? "▶" : "❚❚"}
+        </button>
       </div>
     </div>
   );
