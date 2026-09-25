@@ -84,16 +84,38 @@ const projects = [
 
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
-  
+  const [userPaused, setUserPaused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handleChange = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    const container = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+
     let intervalId;
-  
-    const startAutoSlide = () => {
+    let hovering = false;
+    let focused = false;
+
+    const rotationAllowed = () =>
+      !userPaused && !prefersReducedMotion && !hovering && !focused && document.visibilityState === "visible";
+
+    const stopAutoSlide = () => {
       clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      if (!rotationAllowed()) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
@@ -112,15 +134,52 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-  
+
+    const handleMouseEnter = () => {
+      hovering = true;
+      stopAutoSlide();
+    };
+    const handleMouseLeave = () => {
+      hovering = false;
+      startAutoSlide();
+    };
+    const handleFocusIn = () => {
+      focused = true;
+      stopAutoSlide();
+    };
+    const handleFocusOut = () => {
+      focused = false;
+      startAutoSlide();
+    };
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+
+    container.addEventListener("mouseenter", handleMouseEnter);
+    container.addEventListener("mouseleave", handleMouseLeave);
+    container.addEventListener("focusin", handleFocusIn);
+    container.addEventListener("focusout", handleFocusOut);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     startAutoSlide(); 
-  
+
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      container.removeEventListener("mouseenter", handleMouseEnter);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      container.removeEventListener("focusin", handleFocusIn);
+      container.removeEventListener("focusout", handleFocusOut);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      stopAutoSlide();
     };
-  }, []);
+  }, [userPaused, prefersReducedMotion]);
+
+  const rotationPaused = userPaused || prefersReducedMotion;
   
   return (
     <div className="main">
@@ -132,6 +191,15 @@ const Home = () => {
       <div className="move">
         <button className="btn prev arrow" aria-label="Show previous project">➔</button>
         <button className="btn next arrow" aria-label="Show next project">➔</button>
+        <button
+          type="button"
+          className="btn pause-toggle"
+          aria-label={rotationPaused ? "Resume automatic slide rotation" : "Pause automatic slide rotation"}
+          aria-pressed={rotationPaused}
+          onClick={() => setUserPaused((prev) => !prev)}
+        >
+          {rotationPaused ? "▶" : "⏸"}
+        </button>
       </div>
     </div>
   );

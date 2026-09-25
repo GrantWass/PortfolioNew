@@ -166,6 +166,19 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+
+  .item:nth-of-type(2) .content {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: translateY(-50%);
+  }
+}
+
 /* Move Button Styles */
 .move {
   position: absolute;
