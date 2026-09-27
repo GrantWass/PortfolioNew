@@ -86,15 +86,27 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
   
   useEffect(() => {
+    const main = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
   
     let intervalId;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const stopAutoSlide = () => {
+      clearInterval(intervalId);
+    };
   
     const startAutoSlide = () => {
       clearInterval(intervalId);
+      if (prefersReduced.matches) return;
+      if (main.matches(":hover")) return;
+      if (main.contains(document.activeElement)) return;
       intervalId = setInterval(() => {
+        // Never unmount a focused control via timer.
+        if (main.matches(":hover")) return;
+        if (main.contains(document.activeElement)) return;
         nextButton.click();
       }, 8000);
     };
@@ -112,12 +124,38 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+
+    const handleMouseEnter = () => stopAutoSlide();
+    const handleMouseLeave = () => startAutoSlide();
+    const handleFocusIn = () => stopAutoSlide();
+    const handleFocusOut = (e) => {
+      if (!main.contains(e.relatedTarget)) startAutoSlide();
+    };
+    const handleMotionChange = () => {
+      if (prefersReduced.matches) stopAutoSlide();
+      else startAutoSlide();
+    };
+
+    main.addEventListener("mouseenter", handleMouseEnter);
+    main.addEventListener("mouseleave", handleMouseLeave);
+    main.addEventListener("focusin", handleFocusIn);
+    main.addEventListener("focusout", handleFocusOut);
+    if (typeof prefersReduced.addEventListener === "function") {
+      prefersReduced.addEventListener("change", handleMotionChange);
+    }
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
+      main.removeEventListener("mouseenter", handleMouseEnter);
+      main.removeEventListener("mouseleave", handleMouseLeave);
+      main.removeEventListener("focusin", handleFocusIn);
+      main.removeEventListener("focusout", handleFocusOut);
+      if (typeof prefersReduced.removeEventListener === "function") {
+        prefersReduced.removeEventListener("change", handleMotionChange);
+      }
       clearInterval(intervalId);
     };
   }, []);
