@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPython, FaAws } from "react-icons/fa";
 import {
   SiReact,
@@ -84,21 +84,40 @@ const projects = [
 
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
-  
+  const [autoplayPaused, setAutoplayPaused] = useState(false);
+  const autoplayPausedRef = useRef(false);
+  const hoverPausedRef = useRef(false);
+
   useEffect(() => {
+    autoplayPausedRef.current = autoplayPaused;
     const slider = document.querySelector(".slider");
+    const container = document.querySelector(".main");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    if (!slider || !prevButton || !nextButton) return;
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
     let intervalId;
-  
-    const startAutoSlide = () => {
+
+    const shouldAutoplay = () =>
+      !mediaQuery.matches &&
+      !autoplayPausedRef.current &&
+      !hoverPausedRef.current &&
+      document.visibilityState === "visible";
+
+    const stopAutoSlide = () => {
       clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      if (!shouldAutoplay()) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
     };
-  
+
     const activate = (e) => {
       const items = document.querySelectorAll(".item");
       if (e.target.matches(".next")) {
@@ -107,21 +126,63 @@ const Home = () => {
         slider.prepend(items[items.length - 1]);
       }
       setActiveProject(slider.children[1].querySelector('h3').textContent);
-      startAutoSlide(); 
+      startAutoSlide();
     };
-  
+
+    const handleEnter = () => {
+      hoverPausedRef.current = true;
+      stopAutoSlide();
+    };
+
+    const handleLeave = () => {
+      hoverPausedRef.current = false;
+      startAutoSlide();
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === "hidden") {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+
+    const handleMotionChange = () => {
+      startAutoSlide();
+    };
+
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-  
-    startAutoSlide(); 
-  
+    if (container) {
+      container.addEventListener("mouseenter", handleEnter);
+      container.addEventListener("mouseleave", handleLeave);
+      container.addEventListener("focusin", handleEnter);
+      container.addEventListener("focusout", handleLeave);
+    }
+    document.addEventListener("visibilitychange", handleVisibility);
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handleMotionChange);
+    }
+
+    startAutoSlide();
+
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      if (container) {
+        container.removeEventListener("mouseenter", handleEnter);
+        container.removeEventListener("mouseleave", handleLeave);
+        container.removeEventListener("focusin", handleEnter);
+        container.removeEventListener("focusout", handleLeave);
+      }
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (typeof mediaQuery.removeEventListener === "function") {
+        mediaQuery.removeEventListener("change", handleMotionChange);
+      }
+      stopAutoSlide();
     };
-  }, []);
-  
+  }, [autoplayPaused]);
+
   return (
     <div className="main">
       <ul className="slider">
@@ -132,6 +193,15 @@ const Home = () => {
       <div className="move">
         <button className="btn prev arrow" aria-label="Show previous project">➔</button>
         <button className="btn next arrow" aria-label="Show next project">➔</button>
+        <button
+          type="button"
+          className="btn autoplay-toggle"
+          aria-pressed={autoplayPaused}
+          aria-label={autoplayPaused ? "Play automatic slide rotation" : "Pause automatic slide rotation"}
+          onClick={() => setAutoplayPaused((v) => !v)}
+        >
+          {autoplayPaused ? "▶" : "⏸"}
+        </button>
       </div>
     </div>
   );
