@@ -86,19 +86,39 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
   
   useEffect(() => {
+    const container = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    if (!slider || !prevButton || !nextButton) return;
+
+    const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const hoverQuery = window.matchMedia("(hover: hover)");
+
     let intervalId;
-  
-    const startAutoSlide = () => {
+
+    const isPaused = () => {
+      if (hoverQuery.matches && container && container.matches(":hover")) return true;
+      if (container && container.contains(document.activeElement)) return true;
+      return false;
+    };
+
+    const stopAutoSlide = () => {
       clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      if (reduceMotionQuery.matches) return;
+      if (document.hidden) return;
+      if (isPaused()) return;
       intervalId = setInterval(() => {
+        if (document.hidden || isPaused()) return;
         nextButton.click();
       }, 8000);
     };
-  
+
     const activate = (e) => {
       const items = document.querySelectorAll(".item");
       if (e.target.matches(".next")) {
@@ -107,18 +127,48 @@ const Home = () => {
         slider.prepend(items[items.length - 1]);
       }
       setActiveProject(slider.children[1].querySelector('h3').textContent);
-      startAutoSlide(); 
+      startAutoSlide();
     };
-  
+
+    const handleVisibility = () => {
+      if (document.hidden) stopAutoSlide();
+      else startAutoSlide();
+    };
+
+    const handleMotionChange = () => {
+      if (reduceMotionQuery.matches) stopAutoSlide();
+      else startAutoSlide();
+    };
+
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-  
-    startAutoSlide(); 
-  
+    if (container) {
+      container.addEventListener("mouseenter", stopAutoSlide);
+      container.addEventListener("mouseleave", startAutoSlide);
+      container.addEventListener("focusin", stopAutoSlide);
+      container.addEventListener("focusout", startAutoSlide);
+    }
+    document.addEventListener("visibilitychange", handleVisibility);
+    if (typeof reduceMotionQuery.addEventListener === "function") {
+      reduceMotionQuery.addEventListener("change", handleMotionChange);
+    }
+
+    startAutoSlide();
+
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      if (container) {
+        container.removeEventListener("mouseenter", stopAutoSlide);
+        container.removeEventListener("mouseleave", startAutoSlide);
+        container.removeEventListener("focusin", stopAutoSlide);
+        container.removeEventListener("focusout", startAutoSlide);
+      }
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (typeof reduceMotionQuery.removeEventListener === "function") {
+        reduceMotionQuery.removeEventListener("change", handleMotionChange);
+      }
+      stopAutoSlide();
     };
   }, []);
   
