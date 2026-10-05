@@ -195,6 +195,31 @@
   -webkit-transform: rotate(180deg);
 }
 
+/* Pause/play toggle for the auto-rotating slider (WCAG 2.2.2). */
+.move .pause-btn {
+  border-radius: 999px;
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  line-height: 1;
+}
+
+.move .pause-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Respect users who prefer reduced motion: no auto-advance is scheduled
+   in JS, and no slide/blur animation plays here. */
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+  .item:nth-of-type(2) .content {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 /* Technologies Section */
 .technologies {
   position: absolute;
