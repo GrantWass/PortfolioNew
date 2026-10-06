@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPython, FaAws } from "react-icons/fa";
 import {
   SiReact,
@@ -82,21 +82,79 @@ const projects = [
   },
 ];
 
+const STORAGE_KEY = "project-slider-paused";
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  typeof window.matchMedia === "function" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
+  const [isPaused, setIsPaused] = useState(false);
+  const isPausedRef = useRef(false);
+
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
+
+  // Initial paused state: persisted choice wins, otherwise honor reduced motion.
+  useEffect(() => {
+    try {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored !== null) {
+        const paused = stored === "1";
+        setIsPaused(paused);
+        isPausedRef.current = paused;
+      } else if (prefersReducedMotion()) {
+        setIsPaused(true);
+        isPausedRef.current = true;
+      }
+    } catch {
+      if (prefersReducedMotion()) {
+        setIsPaused(true);
+        isPausedRef.current = true;
+      }
+    }
+  }, []);
+
+  const togglePaused = () => {
+    const next = !isPaused;
+    isPausedRef.current = next;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
+    } catch {}
+    setIsPaused(next);
+  };
   
   useEffect(() => {
+    const container = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
+    if (!slider || !prevButton || !nextButton) return;
   
     let intervalId;
+    let hovering = container ? container.matches(":hover") : false;
+    let focusing = container ? container.contains(document.activeElement) : false;
+
+    const motionPaused = () => isPausedRef.current || prefersReducedMotion();
+    const hoverPaused = () => hovering || focusing;
   
     const startAutoSlide = () => {
       clearInterval(intervalId);
+      if (motionPaused() || hoverPaused()) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
+    };
+
+    const pauseAutoSlide = () => {
+      clearInterval(intervalId);
+    };
+
+    const maybeResume = () => {
+      if (!motionPaused() && !hoverPaused()) startAutoSlide();
     };
   
     const activate = (e) => {
@@ -109,18 +167,69 @@ const Home = () => {
       setActiveProject(slider.children[1].querySelector('h3').textContent);
       startAutoSlide(); 
     };
+
+    const handleMouseEnter = () => {
+      hovering = true;
+      pauseAutoSlide();
+    };
+    const handleMouseLeave = () => {
+      hovering = false;
+      maybeResume();
+    };
+    const handleFocusIn = () => {
+      focusing = true;
+      pauseAutoSlide();
+    };
+    const handleFocusOut = () => {
+      focusing = false;
+      maybeResume();
+    };
+
+    const media = typeof window.matchMedia === "function"
+      ? window.matchMedia("(prefers-reduced-motion: reduce)")
+      : null;
+    const handleMotionChange = () => {
+      if (media && media.matches) pauseAutoSlide();
+      else maybeResume();
+    };
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+    if (container) {
+      container.addEventListener("mouseenter", handleMouseEnter);
+      container.addEventListener("mouseleave", handleMouseLeave);
+      container.addEventListener("focusin", handleFocusIn);
+      container.addEventListener("focusout", handleFocusOut);
+    }
+    if (media) {
+      if (typeof media.addEventListener === "function") {
+        media.addEventListener("change", handleMotionChange);
+      } else if (typeof media.addListener === "function") {
+        media.addListener(handleMotionChange);
+      }
+    }
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
+      if (container) {
+        container.removeEventListener("mouseenter", handleMouseEnter);
+        container.removeEventListener("mouseleave", handleMouseLeave);
+        container.removeEventListener("focusin", handleFocusIn);
+        container.removeEventListener("focusout", handleFocusOut);
+      }
+      if (media) {
+        if (typeof media.removeEventListener === "function") {
+          media.removeEventListener("change", handleMotionChange);
+        } else if (typeof media.removeListener === "function") {
+          media.removeListener(handleMotionChange);
+        }
+      }
       clearInterval(intervalId);
     };
-  }, []);
+  }, [isPaused]);
   
   return (
     <div className="main">
@@ -131,6 +240,15 @@ const Home = () => {
       </ul>
       <div className="move">
         <button className="btn prev arrow" aria-label="Show previous project">➔</button>
+        <button
+          type="button"
+          className="btn pause"
+          aria-label={isPaused ? "Play automatic slide rotation" : "Pause automatic slide rotation"}
+          aria-pressed={isPaused}
+          onClick={togglePaused}
+        >
+          <span aria-hidden="true">{isPaused ? "▶" : "❚❚"}</span>
+        </button>
         <button className="btn next arrow" aria-label="Show next project">➔</button>
       </div>
     </div>
