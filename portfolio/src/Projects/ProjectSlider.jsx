@@ -83,7 +83,7 @@ const projects = [
 ];
 
 const Home = () => {
-  const [activeProject, setActiveProject] = useState("Run Tracker");
+  const [activeProject, setActiveProject] = useState(projects[1].title);
   
   useEffect(() => {
     const slider = document.querySelector(".slider");
