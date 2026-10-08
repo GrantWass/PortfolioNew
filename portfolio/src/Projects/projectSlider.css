@@ -5,6 +5,11 @@
   height: 550px;
 }
 
+/* Valid ul > li markup: keep list semantics without markers */
+.slider {
+  list-style: none;
+}
+
 /* Item Styles */
 .item {
   width: 325px;
