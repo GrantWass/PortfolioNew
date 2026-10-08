@@ -12,7 +12,7 @@ export default function ClientSideProjects({project, index, activeProject}) {
   };
 
   return (
-        <div
+        <li
             key={index}
             className="item">
             <div className="sideContent">
@@ -37,6 +37,6 @@ export default function ClientSideProjects({project, index, activeProject}) {
                     ))}
                 </div>
             </div> : false}
-        </div>
+        </li>
   );
 }
