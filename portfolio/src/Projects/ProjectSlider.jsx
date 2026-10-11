@@ -87,16 +87,52 @@ const Home = () => {
   
   useEffect(() => {
     const slider = document.querySelector(".slider");
+    const container = slider?.closest(".main") ?? slider;
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
+    if (!slider || !prevButton || !nextButton) return;
   
     let intervalId;
+    let paused = false;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const autoplayAllowed = () =>
+      !motionQuery.matches && !document.hidden && !paused;
+
+    const stopAutoSlide = () => {
+      clearInterval(intervalId);
+      intervalId = undefined;
+    };
   
     const startAutoSlide = () => {
-      clearInterval(intervalId);
+      stopAutoSlide();
+      if (!autoplayAllowed()) return;
       intervalId = setInterval(() => {
+        if (!autoplayAllowed()) return;
         nextButton.click();
       }, 8000);
+    };
+
+    const handlePause = () => {
+      paused = true;
+      stopAutoSlide();
+    };
+
+    const handleResume = () => {
+      paused = false;
+      startAutoSlide();
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+
+    const handleMotionChange = () => {
+      startAutoSlide();
     };
   
     const activate = (e) => {
@@ -112,13 +148,25 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+    container.addEventListener("mouseenter", handlePause);
+    container.addEventListener("mouseleave", handleResume);
+    container.addEventListener("focusin", handlePause);
+    container.addEventListener("focusout", handleResume);
+    document.addEventListener("visibilitychange", handleVisibility);
+    motionQuery.addEventListener("change", handleMotionChange);
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      container.removeEventListener("mouseenter", handlePause);
+      container.removeEventListener("mouseleave", handleResume);
+      container.removeEventListener("focusin", handlePause);
+      container.removeEventListener("focusout", handleResume);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      motionQuery.removeEventListener("change", handleMotionChange);
+      stopAutoSlide();
     };
   }, []);
   
