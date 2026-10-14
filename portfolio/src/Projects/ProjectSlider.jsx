@@ -86,14 +86,24 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
   
   useEffect(() => {
+    const container = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    if (!slider || !prevButton || !nextButton) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let intervalId;
-  
-    const startAutoSlide = () => {
+    let isPaused = false;
+
+    const stopAutoSlide = () => {
       clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      if (prefersReducedMotion.matches || isPaused) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
@@ -109,16 +119,57 @@ const Home = () => {
       setActiveProject(slider.children[1].querySelector('h3').textContent);
       startAutoSlide(); 
     };
+
+    const pause = () => {
+      isPaused = true;
+      stopAutoSlide();
+    };
+
+    const resume = () => {
+      isPaused = false;
+      startAutoSlide();
+    };
+
+    const handleFocusOut = (e) => {
+      if (container && e.relatedTarget && container.contains(e.relatedTarget)) return;
+      resume();
+    };
+
+    const handleReducedMotionChange = () => {
+      if (prefersReducedMotion.matches) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+    if (container) {
+      container.addEventListener("mouseenter", pause);
+      container.addEventListener("mouseleave", resume);
+      container.addEventListener("focusin", pause);
+      container.addEventListener("focusout", handleFocusOut);
+    }
+    if (typeof prefersReducedMotion.addEventListener === "function") {
+      prefersReducedMotion.addEventListener("change", handleReducedMotionChange);
+    }
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      if (container) {
+        container.removeEventListener("mouseenter", pause);
+        container.removeEventListener("mouseleave", resume);
+        container.removeEventListener("focusin", pause);
+        container.removeEventListener("focusout", handleFocusOut);
+      }
+      if (typeof prefersReducedMotion.removeEventListener === "function") {
+        prefersReducedMotion.removeEventListener("change", handleReducedMotionChange);
+      }
+      stopAutoSlide();
     };
   }, []);
   
