@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaPython, FaAws } from "react-icons/fa";
 import {
   SiReact,
@@ -84,18 +84,64 @@ const projects = [
 
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
-  
+  const [isPlaying, setIsPlaying] = useState(true);
+  const isPlayingRef = useRef(true);
+  const hoveredRef = useRef(false);
+  const focusedRef = useRef(false);
+  const reducedMotionRef = useRef(false);
+  const controlsRef = useRef({ start: () => {}, stop: () => {} });
+
   useEffect(() => {
+    isPlayingRef.current = isPlaying;
+  }, [isPlaying]);
+
+  useEffect(() => {
+    const container = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+
     let intervalId;
+
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionRef.current = media.matches;
+    if (media.matches) {
+      isPlayingRef.current = false;
+      setIsPlaying(false);
+    }
+    const onMediaChange = (e) => {
+      reducedMotionRef.current = e.matches;
+      if (e.matches) {
+        clearInterval(intervalId);
+        intervalId = undefined;
+        isPlayingRef.current = false;
+        setIsPlaying(false);
+      }
+    };
+    if (media.addEventListener) {
+      media.addEventListener("change", onMediaChange);
+    } else {
+      media.addListener(onMediaChange);
+    }
+
+    const shouldAdvance = () =>
+      isPlayingRef.current &&
+      !reducedMotionRef.current &&
+      !hoveredRef.current &&
+      !focusedRef.current;
+
+    const stopAutoSlide = () => {
+      clearInterval(intervalId);
+      intervalId = undefined;
+    };
   
     const startAutoSlide = () => {
-      clearInterval(intervalId);
+      stopAutoSlide();
+      if (!shouldAdvance()) return;
       intervalId = setInterval(() => {
-        nextButton.click();
+        if (shouldAdvance()) {
+          nextButton.click();
+        }
       }, 8000);
     };
   
@@ -112,15 +158,62 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+
+    const handleMouseEnter = () => {
+      hoveredRef.current = true;
+      stopAutoSlide();
+    };
+    const handleMouseLeave = () => {
+      hoveredRef.current = false;
+      startAutoSlide();
+    };
+    const handleFocusIn = () => {
+      focusedRef.current = true;
+      stopAutoSlide();
+    };
+    const handleFocusOut = (e) => {
+      if (e.relatedTarget && container.contains(e.relatedTarget)) return;
+      focusedRef.current = false;
+      startAutoSlide();
+    };
+
+    container.addEventListener("mouseenter", handleMouseEnter);
+    container.addEventListener("mouseleave", handleMouseLeave);
+    container.addEventListener("focusin", handleFocusIn);
+    container.addEventListener("focusout", handleFocusOut);
+
+    controlsRef.current = { start: startAutoSlide, stop: stopAutoSlide };
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      container.removeEventListener("mouseenter", handleMouseEnter);
+      container.removeEventListener("mouseleave", handleMouseLeave);
+      container.removeEventListener("focusin", handleFocusIn);
+      container.removeEventListener("focusout", handleFocusOut);
+      if (media.removeEventListener) {
+        media.removeEventListener("change", onMediaChange);
+      } else {
+        media.removeListener(onMediaChange);
+      }
+      stopAutoSlide();
     };
   }, []);
+  
+  const toggleAutoPlay = () => {
+    const next = !isPlayingRef.current;
+    // Respect reduced-motion: do not allow opting back into auto-advance.
+    if (reducedMotionRef.current && next) return;
+    isPlayingRef.current = next;
+    setIsPlaying(next);
+    if (next) {
+      controlsRef.current.start();
+    } else {
+      controlsRef.current.stop();
+    }
+  };
   
   return (
     <div className="main">
@@ -132,6 +225,15 @@ const Home = () => {
       <div className="move">
         <button className="btn prev arrow" aria-label="Show previous project">➔</button>
         <button className="btn next arrow" aria-label="Show next project">➔</button>
+        <button
+          type="button"
+          className="btn autoplay"
+          aria-label={isPlaying ? "Pause project auto-advance" : "Play project auto-advance"}
+          aria-pressed={!isPlaying}
+          onClick={toggleAutoPlay}
+        >
+          {isPlaying ? "❚❚" : "▶"}
+        </button>
       </div>
     </div>
   );
