@@ -270,6 +270,15 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate,
+  .fadeOut {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
 
 
 
