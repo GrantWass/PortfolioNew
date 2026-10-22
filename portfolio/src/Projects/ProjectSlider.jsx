@@ -87,15 +87,31 @@ const Home = () => {
   
   useEffect(() => {
     const slider = document.querySelector(".slider");
+    const container = slider ? slider.closest(".main") : null;
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    if (!slider || !prevButton || !nextButton) return undefined;
+
+    const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let intervalId;
-  
-    const startAutoSlide = () => {
+    let hovering = false;
+    let focused = false;
+
+    const autoplayAllowed = () =>
+      !reduceMotionQuery.matches && !document.hidden && !hovering && !focused;
+
+    const stopAutoSlide = () => {
       clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      if (!autoplayAllowed()) return;
       intervalId = setInterval(() => {
-        nextButton.click();
+        if (autoplayAllowed()) {
+          nextButton.click();
+        }
       }, 8000);
     };
   
@@ -112,13 +128,58 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-  
+
+    const pauseScope = container || slider;
+    const handleMouseEnter = () => {
+      hovering = true;
+      stopAutoSlide();
+    };
+    const handleMouseLeave = () => {
+      hovering = false;
+      startAutoSlide();
+    };
+    const handleFocusIn = () => {
+      focused = true;
+      stopAutoSlide();
+    };
+    const handleFocusOut = () => {
+      focused = false;
+      startAutoSlide();
+    };
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+    const handleMotionChange = () => {
+      startAutoSlide();
+    };
+
+    pauseScope.addEventListener("mouseenter", handleMouseEnter);
+    pauseScope.addEventListener("mouseleave", handleMouseLeave);
+    pauseScope.addEventListener("focusin", handleFocusIn);
+    pauseScope.addEventListener("focusout", handleFocusOut);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    if (typeof reduceMotionQuery.addEventListener === "function") {
+      reduceMotionQuery.addEventListener("change", handleMotionChange);
+    }
+
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      pauseScope.removeEventListener("mouseenter", handleMouseEnter);
+      pauseScope.removeEventListener("mouseleave", handleMouseLeave);
+      pauseScope.removeEventListener("focusin", handleFocusIn);
+      pauseScope.removeEventListener("focusout", handleFocusOut);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (typeof reduceMotionQuery.removeEventListener === "function") {
+        reduceMotionQuery.removeEventListener("change", handleMotionChange);
+      }
+      stopAutoSlide();
     };
   }, []);
   
