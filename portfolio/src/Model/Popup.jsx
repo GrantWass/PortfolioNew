@@ -58,10 +58,9 @@ const Popup = ({ title, description, images, onClose }) => {
                   <Image
                     src={src}
                     alt={`Popup image ${index + 1}`}
-                    layout="responsive"
-                    width={150}
-                    height={150}
-                    objectFit="cover"
+                    fill
+                    sizes="(max-width: 525px) 110px, (max-width: 600px) 120px, (max-width: 768px) 150px, 220px"
+                    style={{ objectFit: 'cover', objectPosition: 'center' }}
                   />
                 </div>
               ))}
