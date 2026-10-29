@@ -86,15 +86,36 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
   
   useEffect(() => {
+    const container = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    if (!slider || !prevButton || !nextButton) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pauseTarget = container || slider;
+
     let intervalId;
-  
-    const startAutoSlide = () => {
+
+    const isPausedByUser = () => {
+      try {
+        if (pauseTarget.matches(":hover")) return true;
+      } catch {}
+      const active = document.activeElement;
+      if (active && active !== document.body && pauseTarget.contains(active)) return true;
+      return false;
+    };
+
+    const stopAutoSlide = () => {
       clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+      if (reducedMotion.matches || document.hidden || isPausedByUser()) return;
       intervalId = setInterval(() => {
+        if (document.hidden) return;
         nextButton.click();
       }, 8000);
     };
@@ -112,13 +133,50 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-  
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+
+    const pauseTargetFocusOut = (e) => {
+      if (e.relatedTarget && pauseTarget.contains(e.relatedTarget)) return;
+      startAutoSlide();
+    };
+
+    pauseTarget.addEventListener("mouseenter", stopAutoSlide);
+    pauseTarget.addEventListener("mouseleave", startAutoSlide);
+    pauseTarget.addEventListener("focusin", stopAutoSlide);
+    pauseTarget.addEventListener("focusout", pauseTargetFocusOut);
+    document.addEventListener("visibilitychange", handleVisibility);
+    const handleMotionChange = () => {
+      if (reducedMotion.matches) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+    if (typeof reducedMotion.addEventListener === "function") {
+      reducedMotion.addEventListener("change", handleMotionChange);
+    }
+
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      pauseTarget.removeEventListener("mouseenter", stopAutoSlide);
+      pauseTarget.removeEventListener("mouseleave", startAutoSlide);
+      pauseTarget.removeEventListener("focusin", stopAutoSlide);
+      pauseTarget.removeEventListener("focusout", pauseTargetFocusOut);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      if (typeof reducedMotion.removeEventListener === "function") {
+        reducedMotion.removeEventListener("change", handleMotionChange);
+      }
+      stopAutoSlide();
     };
   }, []);
   
