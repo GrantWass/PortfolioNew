@@ -86,17 +86,25 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
   
   useEffect(() => {
+    const main = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
   
     let intervalId;
+    let isPaused = false;
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   
     const startAutoSlide = () => {
       clearInterval(intervalId);
+      if (reducedMotionQuery.matches || isPaused) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
+    };
+
+    const stopAutoSlide = () => {
+      clearInterval(intervalId);
     };
   
     const activate = (e) => {
@@ -109,15 +117,43 @@ const Home = () => {
       setActiveProject(slider.children[1].querySelector('h3').textContent);
       startAutoSlide(); 
     };
+
+    const pause = () => {
+      isPaused = true;
+      stopAutoSlide();
+    };
+
+    const resume = () => {
+      isPaused = false;
+      startAutoSlide();
+    };
+
+    const handleMotionChange = () => {
+      if (reducedMotionQuery.matches) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+    main.addEventListener("mouseenter", pause);
+    main.addEventListener("mouseleave", resume);
+    main.addEventListener("focusin", pause);
+    main.addEventListener("focusout", resume);
+    reducedMotionQuery.addEventListener?.("change", handleMotionChange);
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
+      main.removeEventListener("mouseenter", pause);
+      main.removeEventListener("mouseleave", resume);
+      main.removeEventListener("focusin", pause);
+      main.removeEventListener("focusout", resume);
+      reducedMotionQuery.removeEventListener?.("change", handleMotionChange);
       clearInterval(intervalId);
     };
   }, []);
