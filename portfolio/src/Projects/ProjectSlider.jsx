@@ -86,17 +86,25 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
   
   useEffect(() => {
+    const container = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
   
     let intervalId;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   
     const startAutoSlide = () => {
       clearInterval(intervalId);
+      if (prefersReducedMotion.matches) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
+    };
+
+    const stopAutoSlide = () => {
+      clearInterval(intervalId);
     };
   
     const activate = (e) => {
@@ -112,12 +120,36 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+
+    const handleMotionChange = (e) => {
+      if (e.matches) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+
+    const handleFocusOut = (e) => {
+      if (container.contains(e.relatedTarget)) return;
+      startAutoSlide();
+    };
+
+    container.addEventListener("mouseenter", stopAutoSlide);
+    container.addEventListener("mouseleave", startAutoSlide);
+    container.addEventListener("focusin", stopAutoSlide);
+    container.addEventListener("focusout", handleFocusOut);
+    prefersReducedMotion.addEventListener("change", handleMotionChange);
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
+      container.removeEventListener("mouseenter", stopAutoSlide);
+      container.removeEventListener("mouseleave", startAutoSlide);
+      container.removeEventListener("focusin", stopAutoSlide);
+      container.removeEventListener("focusout", handleFocusOut);
+      prefersReducedMotion.removeEventListener("change", handleMotionChange);
       clearInterval(intervalId);
     };
   }, []);
