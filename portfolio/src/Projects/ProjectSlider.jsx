@@ -86,14 +86,22 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
   
   useEffect(() => {
+    const main = document.querySelector(".main");
     const slider = document.querySelector(".slider");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
+    if (!slider || !prevButton || !nextButton) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   
     let intervalId;
+
+    const stopAutoSlide = () => {
+      clearInterval(intervalId);
+    };
   
     const startAutoSlide = () => {
-      clearInterval(intervalId);
+      stopAutoSlide();
+      if (reducedMotion.matches) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
@@ -112,13 +120,25 @@ const Home = () => {
   
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
+    if (main) {
+      main.addEventListener("mouseenter", stopAutoSlide);
+      main.addEventListener("mouseleave", startAutoSlide);
+      main.addEventListener("focusin", stopAutoSlide);
+      main.addEventListener("focusout", startAutoSlide);
+    }
   
     startAutoSlide(); 
   
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
+      if (main) {
+        main.removeEventListener("mouseenter", stopAutoSlide);
+        main.removeEventListener("mouseleave", startAutoSlide);
+        main.removeEventListener("focusin", stopAutoSlide);
+        main.removeEventListener("focusout", startAutoSlide);
+      }
+      stopAutoSlide();
     };
   }, []);
   
