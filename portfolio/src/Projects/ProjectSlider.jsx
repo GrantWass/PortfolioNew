@@ -84,21 +84,37 @@ const projects = [
 
 const Home = () => {
   const [activeProject, setActiveProject] = useState("Run Tracker");
-  
+  const [isPaused, setIsPaused] = useState(() => {
+    if (typeof window !== "undefined" && window.matchMedia) {
+      return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    }
+    return false;
+  });
+
   useEffect(() => {
     const slider = document.querySelector(".slider");
+    const main = (slider && slider.closest(".main")) || document.querySelector(".main");
     const prevButton = document.querySelector(".prev");
     const nextButton = document.querySelector(".next");
-  
+    if (!slider || !main || !prevButton || !nextButton) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+
     let intervalId;
-  
+
+    const shouldPause = () => isPaused || mq.matches;
+
     const startAutoSlide = () => {
       clearInterval(intervalId);
+      if (shouldPause()) return;
       intervalId = setInterval(() => {
         nextButton.click();
       }, 8000);
     };
-  
+
+    const stopAutoSlide = () => {
+      clearInterval(intervalId);
+    };
+
     const activate = (e) => {
       const items = document.querySelectorAll(".item");
       if (e.target.matches(".next")) {
@@ -107,24 +123,50 @@ const Home = () => {
         slider.prepend(items[items.length - 1]);
       }
       setActiveProject(slider.children[1].querySelector('h3').textContent);
-      startAutoSlide(); 
+      startAutoSlide();
     };
-  
+
+    const handleMqChange = () => {
+      if (mq.matches) {
+        stopAutoSlide();
+      } else {
+        startAutoSlide();
+      }
+    };
+
     prevButton.addEventListener("click", activate);
     nextButton.addEventListener("click", activate);
-  
-    startAutoSlide(); 
-  
+    main.addEventListener("mouseenter", stopAutoSlide);
+    main.addEventListener("mouseleave", startAutoSlide);
+    main.addEventListener("focusin", stopAutoSlide);
+    const handleFocusOut = (e) => {
+      if (e.relatedTarget && main.contains(e.relatedTarget)) return;
+      startAutoSlide();
+    };
+    main.addEventListener("focusout", handleFocusOut);
+    if (mq.addEventListener) {
+      mq.addEventListener("change", handleMqChange);
+    }
+
+    startAutoSlide();
+
     return () => {
       prevButton.removeEventListener("click", activate);
       nextButton.removeEventListener("click", activate);
+      main.removeEventListener("mouseenter", stopAutoSlide);
+      main.removeEventListener("mouseleave", startAutoSlide);
+      main.removeEventListener("focusin", stopAutoSlide);
+      main.removeEventListener("focusout", handleFocusOut);
+      if (mq.removeEventListener) {
+        mq.removeEventListener("change", handleMqChange);
+      }
       clearInterval(intervalId);
     };
-  }, []);
+  }, [isPaused]);
   
   return (
     <div className="main">
-      <ul className="slider">
+      <ul className="slider" aria-label="Featured projects">
         {projects.map((project, index) => (
           <Project key={index} project={project} index={index} activeProject={activeProject} />
         ))}
@@ -132,6 +174,15 @@ const Home = () => {
       <div className="move">
         <button className="btn prev arrow" aria-label="Show previous project">➔</button>
         <button className="btn next arrow" aria-label="Show next project">➔</button>
+        <button
+          type="button"
+          className="btn autoplay"
+          aria-pressed={isPaused}
+          aria-label={isPaused ? "Resume automatic project rotation" : "Pause automatic project rotation"}
+          onClick={() => setIsPaused((p) => !p)}
+        >
+          {isPaused ? "▶" : "⏸"}
+        </button>
       </div>
     </div>
   );
