@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaPython, FaAws } from "react-icons/fa";
 import {
   SiReact,
@@ -82,56 +82,93 @@ const projects = [
   },
 ];
 
+const AUTOPLAY_MS = 8000;
+
 const Home = () => {
-  const [activeProject, setActiveProject] = useState("Run Tracker");
-  
+  // Order of project indexes; the visible slide is order[1], matching the
+  // previous DOM behavior (slider.children[1]).
+  const [order, setOrder] = useState(() => projects.map((_, i) => i));
+  const [userPaused, setUserPaused] = useState(false);
+  const [hoverFocusPaused, setHoverFocusPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
   useEffect(() => {
-    const slider = document.querySelector(".slider");
-    const prevButton = document.querySelector(".prev");
-    const nextButton = document.querySelector(".next");
-  
-    let intervalId;
-  
-    const startAutoSlide = () => {
-      clearInterval(intervalId);
-      intervalId = setInterval(() => {
-        nextButton.click();
-      }, 8000);
-    };
-  
-    const activate = (e) => {
-      const items = document.querySelectorAll(".item");
-      if (e.target.matches(".next")) {
-        slider.append(items[0]);
-      } else if (e.target.matches(".prev")) {
-        slider.prepend(items[items.length - 1]);
-      }
-      setActiveProject(slider.children[1].querySelector('h3').textContent);
-      startAutoSlide(); 
-    };
-  
-    prevButton.addEventListener("click", activate);
-    nextButton.addEventListener("click", activate);
-  
-    startAutoSlide(); 
-  
-    return () => {
-      prevButton.removeEventListener("click", activate);
-      nextButton.removeEventListener("click", activate);
-      clearInterval(intervalId);
-    };
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(query.matches);
+    const onChange = (e) => setReducedMotion(e.matches);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
   }, []);
-  
+
+  const goNext = useCallback(() => {
+    setOrder((prev) => [...prev.slice(1), prev[0]]);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setOrder((prev) => [prev[prev.length - 1], ...prev.slice(0, -1)]);
+  }, []);
+
+  const autoplayPaused = userPaused || hoverFocusPaused || reducedMotion;
+
+  useEffect(() => {
+    if (autoplayPaused) return;
+    const intervalId = setInterval(goNext, AUTOPLAY_MS);
+    return () => clearInterval(intervalId);
+  }, [autoplayPaused, goNext]);
+
+  const activeProject = projects[order[1]].title;
+  const paused = autoplayPaused;
+
   return (
-    <div className="main">
-      <ul className="slider">
-        {projects.map((project, index) => (
-          <Project key={index} project={project} index={index} activeProject={activeProject} />
-        ))}
+    <div
+      className="main"
+      onMouseEnter={() => setHoverFocusPaused(true)}
+      onMouseLeave={() => setHoverFocusPaused(false)}
+      onFocus={() => setHoverFocusPaused(true)}
+      onBlur={() => setHoverFocusPaused(false)}
+    >
+      <p className="sr-only" aria-live="polite">
+        Showing project {activeProject}
+      </p>
+      <ul className="slider" aria-label="Featured projects">
+        {order.map((projectIndex) => {
+          const project = projects[projectIndex];
+          return (
+            <Project
+              key={project.slug}
+              project={project}
+              index={projectIndex}
+              activeProject={activeProject}
+            />
+          );
+        })}
       </ul>
       <div className="move">
-        <button className="btn prev arrow" aria-label="Show previous project">➔</button>
-        <button className="btn next arrow" aria-label="Show next project">➔</button>
+        <button
+          type="button"
+          className="btn prev arrow"
+          aria-label="Show previous project"
+          onClick={goPrev}
+        >
+          ➔
+        </button>
+        <button
+          type="button"
+          className="btn next arrow"
+          aria-label="Show next project"
+          onClick={goNext}
+        >
+          ➔
+        </button>
+        <button
+          type="button"
+          className="btn autoplay"
+          aria-label={paused ? "Play project slideshow" : "Pause project slideshow"}
+          aria-pressed={paused}
+          onClick={() => setUserPaused((p) => !p)}
+        >
+          {paused ? "▶" : "⏸"}
+        </button>
       </div>
     </div>
   );
