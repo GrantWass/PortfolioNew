@@ -188,6 +188,13 @@
     background-color: rgba(0, 0, 0, 0.6);
     color: rgba(255, 255, 255, 0.9);
   }
+
+  & .btn:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.9);
+  }
 }
 
 .prev {
@@ -467,5 +474,15 @@
     &:nth-child(5) {
       left: 50%;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+  .item:nth-of-type(2) .content {
+    animation: none;
+    opacity: 1;
   }
 }
