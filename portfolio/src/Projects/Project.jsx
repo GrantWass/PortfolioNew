@@ -26,12 +26,12 @@ export default function ClientSideProjects({project, index, activeProject}) {
                 </div>
                 <h3>{project.title}</h3>
                 <div className="links">
-                <button type="button" onClick={() => handleProjectClick(project.slug)}>Learn More</button>
+                <button type="button" onClick={() => handleProjectClick(project.slug)} aria-label={`Learn more about ${project.title}`}>Learn More</button>
                 {project.title === "Interactive Neural Network" && <a href="https://nn-visual.com" target="_blank" rel="noopener noreferrer">nn-visual.com</a>}
                 </div>
                 <div className="technologies">
                     {project.technologies.map((tech, idx) => (
-                    <span key={idx} style={{ color: tech.color }}>
+                    <span key={idx} style={{ color: tech.color }} role="img" aria-label={tech.name} title={tech.name}>
                         {tech.icon}
                     </span>
                     ))}
