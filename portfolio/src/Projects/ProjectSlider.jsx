@@ -21,9 +21,9 @@ const projects = [
     image: "/heatmap.png",
     slug: "run-tracker",
     technologies: [
-      { icon: <SiReact />, color: "#61DAFB" },
-      { icon: <SiJavascript />, color: "#F7DF1E" },
-      { icon: <FaPython />, color: "#3776AB" },
+      { name: "React", icon: <SiReact />, color: "#61DAFB" },
+      { name: "JavaScript", icon: <SiJavascript />, color: "#F7DF1E" },
+      { name: "Python", icon: <FaPython />, color: "#3776AB" },
     ],
   },
   {
@@ -31,9 +31,9 @@ const projects = [
     image: "/defaultGame.png",
     slug: "secret-gitler",
     technologies: [
-      { icon: <SiReact />, color: "#61DAFB" },
-      { icon: <SiTypescript />, color: "#007ACC" },
-      { icon: <SiMongodb />, color: "#47A248" },
+      { name: "React", icon: <SiReact />, color: "#61DAFB" },
+      { name: "TypeScript", icon: <SiTypescript />, color: "#007ACC" },
+      { name: "MongoDB", icon: <SiMongodb />, color: "#47A248" },
     ],
   },
   {
@@ -41,10 +41,10 @@ const projects = [
     image: "/nn.png",
     slug: "neural-network",
     technologies: [
-      { icon: <SiReact />, color: "#61DAFB" },
-      { icon: <SiJavascript />, color: "#F7DF1E" },
-      { icon: <FaPython />, color: "#3776AB" },
-      { icon: <FaAws />, color: "#FF9900" },
+      { name: "React", icon: <SiReact />, color: "#61DAFB" },
+      { name: "JavaScript", icon: <SiJavascript />, color: "#F7DF1E" },
+      { name: "Python", icon: <FaPython />, color: "#3776AB" },
+      { name: "AWS", icon: <FaAws />, color: "#FF9900" },
     ],
   },
   {
@@ -52,8 +52,8 @@ const projects = [
     image: "/travela_trip.png",
     slug: "travela",
     technologies: [
-      { icon: <SiNextdotjs />, color: "#000000" },
-      { icon: <SiVercel />, color: "#000000" },
+      { name: "Next.js", icon: <SiNextdotjs />, color: "#000000" },
+      { name: "Vercel", icon: <SiVercel />, color: "#000000" },
     ],
   },
   {
@@ -61,12 +61,12 @@ const projects = [
     image: "/ultron_home.png",
     slug: "ultron",
     technologies: [
-      { icon: <SiTypescript />, color: "#007ACC" },
-      { icon: <SiNextdotjs />, color: "#000000" },
-      { icon: <SiSupabase />, color: "#3ECF8E" },
-      { icon: <SiStripe />, color: "#635BFF" },
-      { icon: <SiOpenai />, color: "#412991" },
-      { icon: <FaAws />, color: "#FF9900" },
+      { name: "TypeScript", icon: <SiTypescript />, color: "#007ACC" },
+      { name: "Next.js", icon: <SiNextdotjs />, color: "#000000" },
+      { name: "Supabase", icon: <SiSupabase />, color: "#3ECF8E" },
+      { name: "Stripe", icon: <SiStripe />, color: "#635BFF" },
+      { name: "OpenAI", icon: <SiOpenai />, color: "#412991" },
+      { name: "AWS", icon: <FaAws />, color: "#FF9900" },
     ],
   },
   {
@@ -74,10 +74,10 @@ const projects = [
     image: "/old1.png",
     slug: "old-portfolio",
     technologies: [
-      { icon: <SiReact />, color: "#61DAFB" },
-      { icon: <SiJavascript />, color: "#F7DF1E" },
-      { icon: <SiNextdotjs />, color: "#000000" },
-      { icon: <FaAws />, color: "#FF9900" },
+      { name: "React", icon: <SiReact />, color: "#61DAFB" },
+      { name: "JavaScript", icon: <SiJavascript />, color: "#F7DF1E" },
+      { name: "Next.js", icon: <SiNextdotjs />, color: "#000000" },
+      { name: "AWS", icon: <FaAws />, color: "#FF9900" },
     ],
   },
 ];
